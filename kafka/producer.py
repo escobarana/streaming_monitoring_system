@@ -6,23 +6,16 @@ from confluent_kafka.schema_registry.json_schema import JSONSerializer
 from confluent_kafka.serialization import StringSerializer
 import os
 from helpers.sensor_schema import schema
-from datetime import datetime
 
 
-def sensor_to_dict(sensor, ctx):
+def sensor_to_dict(data, ctx):
     """
     Function to transform a Sensor object into a dictionary
-    :param sensor: Sensor object to be transformed
+    :param data: Sensor
     :param ctx:
     :return:
     """
-    return dict(device=sensor.device,
-                sensor_id=sensor.sensor_id,
-                name=sensor.name,
-                sensor_type=sensor.sensor_type,
-                measure=sensor.measure,
-                maximum=sensor.maximum,
-                loading_datetime=datetime.today().strftime('%Y-%m-%d@%H:%M:%S'))
+    return dict(data)
 
 
 def delivery_report(err, msg):

@@ -2,38 +2,53 @@ schema = """
 {
   "description": "Sensor's measurements",
   "properties": {
-    "maximum": {
-      "description": "Sensor's maximum value reachable (ºC, w, %)",
-      "type": "number"
-    },
-    "measure": {
-      "description": "Sensor's measure (ºC, w, %)",
-      "type": "number"
-    },
-    "name": {
-      "description": "Sensor's name",
+  "Device": {
+      "description": "Device name",
       "type": "string"
     },
-    "device": {
-      "description": "Sensor's device",
-      "type": "string"
+    "ClockCPUCoreOne": {
+      "description": "",
+      "type": "number"
+    },
+    "TemperatureCPUPackage": {
+      "description": "",
+      "type": "number"
+    },
+    "LoadCPUTotal": {
+      "description": "",
+      "type": "number"
+    },
+    "PowerCPUPackage": {
+      "description": "",
+      "type": "number"
     }
-    "sensor_id": {
-      "description": "Sensor's identifier",
-      "type": "string"
+    "TemperatureGPUCore": {
+      "description": "",
+      "type": "number"
     },
-    "sensor_type": {
-      "description": "Sensor's type (Temperature, Power, Load)",
+    "LoadGPUCore": {
+      "description": "",
+      "type": "number"
+    },
+    "Throttled": {
+      "description": "",
+      "type": "number"
+    },
+    "loading_datetime": {
+      "description": "",
       "type": "string"
     }
   },
   "required": [
-    "device",
-    "sensor_id",
-    "name",
-    "sensor_type",
-    "measure",
-    "maximum"
+    "Device",
+    "ClockCPUCoreOne",
+    "TemperatureCPUPackage",
+    "LoadCPUTotal",
+    "PowerCPUPackage",
+    "TemperatureGPUCore",
+    "LoadGPUCore",
+    "Throttled",
+    "loading_datetime"
   ],
   "title": "Sensor",
   "type": "object"
