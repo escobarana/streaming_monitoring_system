@@ -1,37 +1,75 @@
-class Sensor:
+class Sensor(object):
     """
-    Class to identify the properties of a sensor and deserialize the data when consuming from a Kafka topic
+        Class to identify the properties of a sensor and deserialize the data when consuming from a Kafka topic
     """
+    _device = None
+    _sensor_id = None
+    _name = None
+    _sensor_type = None
+    _measure = None
+    _maximum = None
 
-    def __init__(self, sensor_id, name, sensor_type, measure, maximum):
+    def __new__(cls, sensor_id, name, sensor_type, measure, maximum):
         """
-        Initialization of class Sensor
+            Initialization of class Sensor
         :param sensor_id: Unique identifier of the sensor
         :param name: Sensor's name
         :param sensor_type: Type of the sensor (Temperature, Power, Load)
         :param measure: The value of the measure (ºC, w, %)
         :param maximum: Maximum value the sensor can reach
         """
-        self.sensor_id = sensor_id
-        self.name = name
-        self.sensor_type = sensor_type
-        self.measure = measure
-        self.maximum = maximum
+        cls._device = 'CPU'
+        cls._sensor_id = sensor_id
+        cls._name = name
+        cls._sensor_type = sensor_type
+        cls._measure = measure
+        cls._maximum = maximum
 
-    def set_sensor_id(self, sensor_id):
-        self.sensor_id = sensor_id
+    # --- GETTERS AND SETTERS --- #
+    @property
+    def device(self):
+        return self._device
 
-    def set_name(self, name):
-        self.name = name
+    @device.setter
+    def device(self, val):
+        self._device = val
 
-    def set_sensor_type(self, sensor_type):
-        self.sensor_type = sensor_type
+    @property
+    def sensor_id(self):
+        return self._sensor_id
 
-    def set_measure(self, measure):
-        self.measure = measure
+    @sensor_id.setter
+    def sensor_id(self, val):
+        self._sensor_id = val
 
-    def set_maximum(self, maximum):
-        self.maximum = maximum
+    @property
+    def name(self):
+        return self._name
 
-    def get_measure(self):
-        return self.measure
+    @name.setter
+    def name(self, val):
+        self._name = val
+
+    @property
+    def sensor_type(self):
+        return self._sensor_type
+
+    @sensor_type.setter
+    def sensor_type(self, val):
+        self._sensor_type = val
+
+    @property
+    def measure(self):
+        return self._measure
+
+    @measure.setter
+    def measure(self, val):
+        self._measure = val
+
+    @property
+    def maximum(self):
+        return self._maximum
+
+    @maximum.setter
+    def maximum(self, val):
+        self._maximum = val

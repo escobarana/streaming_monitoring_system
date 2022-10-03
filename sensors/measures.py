@@ -28,11 +28,11 @@ class Measures:
         sensor = Sensor(sensor_id="", name="", sensor_type="", measure=0, maximum=0)
         for each in self.temperature_info:
             if each.SensorType == 'Temperature':
-                sensor.set_sensor_id(each.InstanceId)
-                sensor.set_name(each.Name)
-                sensor.set_sensor_type(each.SensorType)
-                sensor.set_measure(each.Value)
-                sensor.set_maximum(each.Max)
+                sensor.sensor_id = each.InstanceId
+                sensor.name = each.Name
+                sensor.sensor_type = each.SensorType
+                sensor.measure = each.Value
+                sensor.maximum = each.Max
         return sensor
 
     def get_power(self) -> Sensor:
@@ -43,11 +43,11 @@ class Measures:
         sensor = Sensor(sensor_id="", name="", sensor_type="", measure=0, maximum=0)
         for each in self.temperature_info:
             if each.SensorType == 'Power':
-                sensor.set_sensor_id(each.InstanceId)
-                sensor.set_name(each.Name)
-                sensor.set_sensor_type(each.SensorType)
-                sensor.set_measure(each.Value)
-                sensor.set_maximum(each.Max)
+                sensor.sensor_id = each.InstanceId
+                sensor.name = each.Name
+                sensor.sensor_type = each.SensorType
+                sensor.measure = each.Value
+                sensor.maximum = each.Max
         return sensor
 
     def get_load(self) -> Sensor:
@@ -58,54 +58,54 @@ class Measures:
         sensor = Sensor(sensor_id="", name="", sensor_type="", measure=0, maximum=0)
         for each in self.temperature_info:
             if each.SensorType == 'Load':
-                sensor.set_sensor_id(each.InstanceId)
-                sensor.set_name(each.Name)
-                sensor.set_sensor_type(each.SensorType)
-                sensor.set_measure(each.Value)
-                sensor.set_maximum(each.Max)
+                sensor.sensor_id = each.InstanceId
+                sensor.name = each.Name
+                sensor.sensor_type = each.SensorType
+                sensor.measure = each.Value
+                sensor.maximum = each.Max
         return sensor
 
     def get_voltage(self) -> Sensor:
         """
-        Function to measure CPU voltage in watt
+        Function to measure CPU voltage in volts
         :return: Sensor object containing CPU voltage sensor relevant information
         """
         sensor = Sensor(sensor_id="", name="", sensor_type="", measure=0, maximum=0)
         for each in self.temperature_info:
             if each.SensorType == 'Voltage':
-                sensor.set_sensor_id(each.InstanceId)
-                sensor.set_name(each.Name)
-                sensor.set_sensor_type(each.SensorType)
-                sensor.set_measure(each.Value)
-                sensor.set_maximum(each.Max)
+                sensor.sensor_id = each.InstanceId
+                sensor.name = each.Name
+                sensor.sensor_type = each.SensorType
+                sensor.measure = each.Value
+                sensor.maximum = each.Max
         return sensor
 
     def get_fan(self) -> Sensor:
         """
-        Function to measure CPU fan in watt
+        Function to measure CPU fan in CFM
         :return: Sensor object containing CPU fan sensor relevant information
         """
         sensor = Sensor(sensor_id="", name="", sensor_type="", measure=0, maximum=0)
         for each in self.temperature_info:
             if each.SensorType == 'Fan':
-                sensor.set_sensor_id(each.InstanceId)
-                sensor.set_name(each.Name)
-                sensor.set_sensor_type(each.SensorType)
-                sensor.set_measure(each.Value)
-                sensor.set_maximum(each.Max)
+                sensor.sensor_id = each.InstanceId
+                sensor.name = each.Name
+                sensor.sensor_type = each.SensorType
+                sensor.measure = each.Value
+                sensor.maximum = each.Max
         return sensor
 
     def get_clock(self) -> Sensor:
         """
-        Function to measure CPU clock in watt
+        Function to measure CPU clock in GHz
         :return: Sensor object containing CPU clock sensor relevant information
         """
         sensor = Sensor(sensor_id="", name="", sensor_type="", measure=0, maximum=0)
         for each in self.temperature_info:
             if each.SensorType == 'Clock':
-                sensor.set_sensor_id(each.InstanceId)
-                sensor.set_name(each.Name)
-                sensor.set_sensor_type(each.SensorType)
-                sensor.set_measure(each.Value)
-                sensor.set_maximum(each.Max)
+                sensor.sensor_id = each.InstanceId
+                sensor.name = each.Name
+                sensor.sensor_type = each.SensorType
+                sensor.measure = each.Value
+                sensor.maximum = each.Max
         return sensor
