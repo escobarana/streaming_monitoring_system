@@ -2,8 +2,14 @@
 
 Web application (Flask based) that will maintain one or several device's data simulator while the app is running.
 
-Each device instance will work as an all-in-one state machine, and will send their data through MQT every few seconds 
+Each device instance will work as an all-in-one state machine, and will send their data through MQTT every few seconds 
 also, each device can be controlled by an API.
+
+The data from MQTT Topic (Raspberry Pi device) will be consumed by kafka connect to be sent to kafka whereas the data 
+produced by CPU will be directly produced to the kafka topic specified.
+
+All this data will be used to monitor the health of the devices and predict whether they will fail or not. This is 
+achieved thanks to the Federated Learning models developed.
 
 ## Docker
 
@@ -32,6 +38,9 @@ docker run --platform linux/amd64 --env-file .env -p 80:80 data-simulator
 
 
 ## Run locally
+
+OpenHardwareMonitor software must be running before launching the instance. 
+*https://openhardwaremonitor.org/*
 
 Install prerequisites:
 
