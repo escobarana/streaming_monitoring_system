@@ -46,19 +46,21 @@ class MQTTConfig:
         print(msg.topic)
         print(msg.qos)
         print(json.loads(msg.payload))
-        payload = json.loads(msg.payload)
+        # TODO: generate csv
+
+        # payload = json.loads(msg.payload)
         # MQTT Bridge to Kafka
-        value = dict(Device=payload["device"],
-                     ClockCPUCoreOne=payload["frequency_core_hz"],
-                     TemperatureCPUPackage=payload["CPU_temp_celsius"],
-                     TemperatureGPUCore=payload["GPU_temp_celsius"],
-                     LoadCPUTotal=payload["memory_arm_bytes"],
-                     LoadGPUCore=payload["memory_gpu_bytes"],
-                     PowerCPUPackage=payload["voltage_core_v"],
-                     Throttled=payload["throttled"],
-                     loading_datetime=payload['loading_datetime'])
-        print(value)
-        KafkaProducer().produce_json(os.environ['TOPIC_NAME'], value)
+        # value = dict(Device=payload["device"],
+        #              ClockCPUCoreOne=payload["frequency_core_hz"],
+        #              TemperatureCPUPackage=payload["CPU_temp_celsius"],
+        #              TemperatureGPUCore=payload["GPU_temp_celsius"],
+        #              LoadCPUTotal=payload["memory_arm_bytes"],
+        #              LoadGPUCore=payload["memory_gpu_bytes"],
+        #              PowerCPUPackage=payload["voltage_core_v"],
+        #              Throttled=payload["throttled"],
+        #              loading_datetime=payload['loading_datetime'])
+        # print(value)
+        # KafkaProducer().produce_json(os.environ['TOPIC_NAME'], value)
 
     @staticmethod
     def on_log(client, userdata, level, buf):
