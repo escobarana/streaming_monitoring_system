@@ -31,6 +31,7 @@ def get_predection():
         with open(trained_model , 'rb') as f:
             lr = pickle.load(f)
             prediction = lr.predict([X])
+            
             return {
                 "prediction": str(prediction)
             }
