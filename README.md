@@ -71,7 +71,12 @@ Install prerequisites:
 pip install -r requirements.txt
 ```
 
-Run Flask
+Run producer for CPU device
 ```shell
-flask -app flas_app.py run -h 0.0.0.0 -p 80
+python local_producer_cpu.py
+```
+
+Run Flask for Rasperry pi
+```shell
+flask --app flask_local_Rasperry.py run -h 0.0.0.0 -p 80
 ```
