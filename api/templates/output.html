@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<center>
+    <h1>Data Consumed from Kafka</h1>
+    <!-- <form action="/predict" method=post enctype=multipart/form-data> -->
+    <div style="width:500px; margin:auto; background-color:#eee">
+
+
+                <label for="Clock CPU Core #1" style="font-weight:700">Clock CPU Core #1</label><br>
+                <output name="resultClock">{{ resultClock }}</output>
+                <br><br>
+
+                <label for="Temperature CPU Package" style="font-weight:700">Temperature CPU Package</label><br>
+                <output name="resultTemperatureCPU">{{ resultTemperatureCPU }}</output>
+                <br><br>
+
+                <label for="Load CPU Total" style="font-weight:700">Load CPU Total</label><br>
+                <output name="resultLoadCPUTotal">{{ resultLoadCPUTotal }}</output>
+                <br><br>
+
+                <label for="Power CPU Package" style="font-weight:700">Power CPU Package</label><br>
+                <output name="resultPowerCPUPackage">{{ resultPowerCPUPackage }}</output>
+                <br><br>
+
+                <label for="Temperature GPU Core" style="font-weight:700">Temperature GPU Core</label><br>
+                <output name="resultTemperatureGPUCore">{{ resultTemperatureGPUCore }}</output>
+                <br><br>
+
+                <label for="Load GPU Core" style="font-weight:700">Load GPU Core</label><br>
+                <output name="resultLoadGPUCore">{{ resultLoadGPUCore }}</output>
+                <br><br>
+
+
+
+            </div>
+    <br><br>
+
+    <label for="Prediction" style="font-weight:700">Health Check</label><br>
+    <h2>{{ resultPrediction }}</h2>
+    </form>
+</center>
+{% endblock %}
