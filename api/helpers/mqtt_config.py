@@ -3,7 +3,6 @@ from paho import mqtt
 import json
 import os
 import logging
-from kafka.producer import KafkaProducer
 
 logging.basicConfig()
 logger = logging.getLogger('mqtt')

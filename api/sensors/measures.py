@@ -1,5 +1,5 @@
 import wmi
-from sensors.sensor import Sensor
+from api.sensors.sensor import Sensor
 
 
 class Measures:
