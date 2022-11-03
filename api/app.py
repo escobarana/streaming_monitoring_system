@@ -1,12 +1,14 @@
 from flask import Flask, request, render_template
+# from werkzeug.middleware.dispatcher import DispatcherMiddleware
+# from werkzeug.serving import run_simple
+from kafka.cpu_consumer import launch_consumer_and_predicter
+from flask import Flask, request, Blueprint
 from flask_restx import Api, Resource, fields
 # from werkzeug.middleware.dispatcher import DispatcherMiddleware
 # from werkzeug.serving import run_simple
-from pip._internal.index.collector import _determine_base_url
-
 from helpers.config_mongodb import get_data_from_mongodb
-from kafka.cpu_consumer import launch_consumer_and_predicter
 import logging
+
 
 logging.basicConfig()
 logger = logging.getLogger(__name__)
