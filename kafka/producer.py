@@ -5,7 +5,7 @@ from confluent_kafka.schema_registry import SchemaRegistryClient
 from confluent_kafka.schema_registry.json_schema import JSONSerializer
 from confluent_kafka.serialization import StringSerializer
 import os
-from helpers.sensor_schema import schema
+from kafka.sensor_schema import schema
 
 
 def sensor_to_dict(data, ctx):

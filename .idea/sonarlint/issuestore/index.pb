@@ -6,6 +6,4 @@ R
 F
 test/raspberry_test.py,d\f\dfef8d08540462fc34d6541af6334a4a015c28b7
 A
-kafka/producer.py,d\4\d4f05f0eb0a1756cbdd7f55a25e6ee024bc99f52
-A
 kafka/__init__.py,2\d\2da208b3af6004e22a1b91706559f00a4ce85dd4

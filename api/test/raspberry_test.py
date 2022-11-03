@@ -1,5 +1,5 @@
 import unittest
-from raspberrypi.raspberry_singleton import Raspberry
+from api.raspberrypi import Raspberry
 
 
 class RaspberryTest(unittest.TestCase):

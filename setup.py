@@ -4,10 +4,10 @@ setup(
     name='data-simulator',
     verion='1.0',
     packages=[],
-    packages_dir={'': 'data_simulator'},
+    packages_dir={'': ''},
     url='',
     license='',
-    author='aescobar',
-    author_email='ana.escobar-llamazares@edu.dsti.institute',
-    description='Dockerized app Data Simulator'
+    author='',
+    author_email='',
+    description=''
 )
