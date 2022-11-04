@@ -6,6 +6,7 @@ COPY . /api
 
 WORKDIR api
 
+RUN apk add build-base
 RUN pip install -U pip && \
     pip install --no-cache-dir -v -r requirements.txt
 
