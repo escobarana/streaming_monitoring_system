@@ -1,20 +1,20 @@
-{% extends 'base.html' %} 
+{% extends 'base.html' %}
 
 {% block content %}
-    
+
 <center>
     <h1>Welcome To Our Predictive Maintenance Solution</h1>
     <h2>Press 'Start' button to start prediction of device health and potential failure</h2>
     <form action="/predict" method=post enctype=multipart/form-data>
     <div style="width:500px; margin:auto; background-color:#eee">
 
-                
-            </div>    
+
+            </div>
     <br><br>
 
     <input type=submit value=Start class="btn btn-primary|secondary|success|danger|warning|info|light|dark|link">
 
-    
+
     <h2>{{ result }}</h2>
     </form>
 </center>
