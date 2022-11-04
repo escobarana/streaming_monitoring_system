@@ -1,6 +1,4 @@
 
-8
-setup.py,8\e\8e2edce0d507e1297474f25c00cae94258db38d8
 G
 api/sensors/measures.py,f\5\f5db8e0b7bbd2f0e186a299a91f3d93d245801c9
 G

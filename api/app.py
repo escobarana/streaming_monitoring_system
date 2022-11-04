@@ -9,7 +9,6 @@ from flask_restx import Api, Resource, fields
 from helpers.config_mongodb import get_data_from_mongodb
 import logging
 
-
 logging.basicConfig()
 logger = logging.getLogger(__name__)
 
@@ -35,14 +34,12 @@ prediction = api.model('Prediction', {
 })
 
 
-@app.route('/', methods=["GET", "POST"])
 @app.route('/home', methods=["GET", "POST"])
 def home():
     return render_template('index.html', context='templates')
 
 
 @ns.doc('get_results')
-# @ns.route('/results', methods=['GET'])
 @app.route('/results', methods=['GET'])
 def output_results():
     return render_template('output.html', context='templates')
@@ -52,19 +49,19 @@ def output_results():
 # @ns.route('/predict', methods=['POST'])
 @app.route('/predict', methods=['POST'])
 def predict():
-    print(" I am in predict ")
-    print("Request.method:", request.method)
-    print("Request.TYPE", type(request))
+    # print(" I am in predict ")
+    # print("Request.method:", request.method)
+    # print("Request.TYPE", type(request))
 
-    if request.method == 'POST':
-        launch_consumer_and_predicter()
-        # return outputResults(records_dict['Clock CPU Core #1'],
-        #                      records_dict['Temperature CPU Package'],
-        #                      records_dict['Load CPU Total'],
-        #                      records_dict['Power CPU Package'],
-        #                      records_dict['Temperature GPU Core'],
-        #                      records_dict['Load GPU Core'],
-        #                      resultPredicted)
+    # if request.method == 'POST':
+    launch_consumer_and_predicter()
+    # return outputResults(records_dict['Clock CPU Core #1'],
+    #                      records_dict['Temperature CPU Package'],
+    #                      records_dict['Load CPU Total'],
+    #                      records_dict['Power CPU Package'],
+    #                      records_dict['Temperature GPU Core'],
+    #                      records_dict['Load GPU Core'],
+    #                      resultPredicted)
 
 
 class AppDAO(object):
@@ -99,9 +96,15 @@ DAO = AppDAO()
 
 
 # --- START ENDPOINTS --- #
+@ns.route('/', methods=["GET", "POST"])
+class Home(Resource):
+    def get(selfs):
+        """Access main page"""
+        return render_template('index.html', context='templates')
+
 
 # @MAIN.route('/')
-@ns.route('/', methods=['GET'])
+@ns.route('/doc', methods=['GET'])
 class PredictionList(Resource):
     """Shows a list of all predictions"""
 
@@ -112,7 +115,7 @@ class PredictionList(Resource):
         return DAO.list()
 
 
-@ns.route('/<string:device>')
+@ns.route('/doc/<string:device>')
 @ns.response(404, 'Prediction not found')
 @ns.param('device', 'The device to get the prediction from [raspberry, pc1, pc2]')
 # @MAIN.route('/<string:device>')
@@ -126,7 +129,7 @@ class Prediction(Resource):
         return DAO.get(device=device)
 
 
-@ns.route('/<string:device>/status')
+@ns.route('/doc/<string:device>/status')
 @ns.response(404, 'Status not found')
 @ns.param('device', 'The device to get the prediction from [raspberry, pc1, pc2]')
 # @MAIN.route('/<string:device>')
