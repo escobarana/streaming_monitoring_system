@@ -11,8 +11,6 @@ M
 api/helpers/config_mongodb.py,f\3\f339ddbbf3a9c8a5eafd4e57b9982dfa2cb1e4a8
 G
 model/data_retriever.py,6\4\6462df8adec1e51f7f2307f9f8b45232b672fe9e
-D
-api/requirements.txt,a\7\a729ad802c7f4dd220f2ecccd6f4507115295a59
 F
 generators/__init__.py,0\0\008d301e53776433f661375e1f3b8c19970342f6
 G

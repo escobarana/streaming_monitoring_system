@@ -3,6 +3,7 @@ vcgencmd~=0.1.1
 Flask~=2.1.2
 Werkzeug~=2.1.2
 flask-restx==0.5.1
+pypiwin32==223
 setuptools==57.0.0
 WMI~=1.5.1
 confluent-kafka==1.9.2
