@@ -11,5 +11,9 @@ RUN pip install --upgrade pip && \
 
 RUN rm requirements.txt
 
+ENV DEVICE PC
+
+EXPOSE 5000
+
 # Run Flask App
-CMD["python", "app.py"]
+CMD ["python", "app.py"]
