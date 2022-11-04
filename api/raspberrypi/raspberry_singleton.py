@@ -31,7 +31,7 @@ class Raspberry(object):
             cls._raspberry_instance = super(Raspberry, cls).__new__(cls)
 
             my_cmd = vcgencmd.Vcgencmd()
-            cls._device = "raspberry-pi-4b"
+            cls._device = "raspberry"
             cls._gpu_temp_celsius = my_cmd.measure_temp()
 
             cpu = subprocess.Popen(['cat', '/sys/class/thermal/thermal_zone0/temp'],

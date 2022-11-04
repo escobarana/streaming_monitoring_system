@@ -29,8 +29,7 @@ if __name__ == '__main__':
 
 
     # Produce data by selecting the following relevant sensors:
-    # Clock CPU Core #1, Temperature CPU Package, Load CPU Total, Power CPU Package,
-    # Temperature GPU Core and Load GPU Core
+    # Clock CPU Core #1, Temperature CPU Package, Load CPU Total, Power CPU Package, Temperature GPU Core and Load GPU Core
 
     # Creation of a Measures object
     m = Measures()
@@ -45,8 +44,7 @@ if __name__ == '__main__':
 
     # A List Comprehension to create of a list of lists containing the sensor types, the names and the values
     data_values = [[x.SensorType + " " + x.Name, x.Value] for x in myList if x.SensorType + " " + x.Name in data_fields]
-    # data_values = [[x.SensorType+" "+x.Name, [x.Value, x.Max]] for x in myList if x.SensorType+" "+
-    # x.Name in data_fields]
+    # data_values = [[x.SensorType+" "+x.Name, [x.Value, x.Max]] for x in myList if x.SensorType+" "+x.Name in data_fields]
 
     # for m in myList:
     #   print(m)
