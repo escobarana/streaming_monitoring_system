@@ -1,12 +1,14 @@
+from flask import Flask, request, render_template
+# from werkzeug.middleware.dispatcher import DispatcherMiddleware
+# from werkzeug.serving import run_simple
+from kafka.cpu_consumer import launch_consumer_and_predicter
 from flask import Flask, request, Blueprint
 from flask_restx import Api, Resource, fields
 # from werkzeug.middleware.dispatcher import DispatcherMiddleware
 # from werkzeug.serving import run_simple
 from helpers.config_mongodb import get_data_from_mongodb
-import json
 import logging
-import model.config
-import pickle
+
 
 logging.basicConfig()
 logger = logging.getLogger(__name__)
@@ -21,7 +23,8 @@ app = Flask(__name__)
 api = Api(app,
           version='1.0',
           title='Monitoring Device Prediction REST API',
-          description='Documentation of the Monitoring Device Prediction REST API'
+          description='Documentation of the Monitoring Device Prediction REST API',
+          doc='/doc/'
           )
 
 ns = api.namespace('predictions', description='operations')
@@ -30,6 +33,31 @@ prediction = api.model('Prediction', {
     'device': fields.String(required=True, description="The device name of the prediction."),
     'example': fields.String(required=True, description="This is another example.")
 })
+
+
+@app.route('/', methods=["GET", "POST"])
+@app.route('/home', methods=["GET", "POST"])
+def home():
+    return render_template('index.html', context='templates')
+
+
+@ns.doc('get_results')
+# @ns.route('/results', methods=['GET'])
+@app.route('/results', methods=['GET'])
+def output_results():
+    return render_template('output.html', context='templates')
+
+
+@ns.doc('post_prediction')
+# @ns.route('/predict', methods=['POST'])
+@app.route('/predict', methods=['POST'])
+def predict():
+    print(" I am in predict ")
+    print("Request.method:", request.method)
+    print("Request.TYPE", type(request))
+
+    if request.method == 'POST':
+        launch_consumer_and_predicter()
 
 
 class AppDAO(object):
