@@ -6,12 +6,7 @@ COPY . /api
 
 WORKDIR api
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends gcc and-build-dependencies \
-    && rm -rf /var/lib/apt/lists/* \
-    && pip install cryptography \
-    && apt-get purge -y --auto-remove gcc and-build-dependencies \
-    && pip install numpy
+RUN pip install numpy
 
 RUN pip install -U pip && \
     pip install --no-cache-dir -v -r requirements.txt
