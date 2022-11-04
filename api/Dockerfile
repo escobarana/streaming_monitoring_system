@@ -6,10 +6,11 @@ COPY . /api
 
 WORKDIR api
 
+RUN pip install -U pip
+RUN pip install "pywin32>=223"
 RUN pip install numpy
 
-RUN pip install -U pip && \
-    pip install --no-cache-dir -v -r requirements.txt
+RUN pip install --no-cache-dir -v -r requirements.txt
 
 RUN rm requirements.txt
 
