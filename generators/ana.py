@@ -35,14 +35,11 @@ def data_push():
     load_dotenv()
     topic = os.environ['TOPIC_NAME_IOT']
     raspberry = Raspberry().json
-    print('\n --------- ')
-    print(raspberry['uuid'])
-    print('\n --------- ')
     KafkaProducer().produce_json(topic_name=topic, data=raspberry)
     # write_local(raspberry)
 
 
 if __name__ == "__main__":
-    while True:
+    while True:  # infinite loop
         data_push()
         time.sleep(5)  # Every 5 seconds to avoid data repetition in small periods of time
