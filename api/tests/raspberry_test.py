@@ -1,5 +1,5 @@
 import unittest
-from api.raspberrypi import Raspberry
+from raspberrypi import Raspberry
 
 
 class RaspberryTest(unittest.TestCase):
@@ -7,21 +7,26 @@ class RaspberryTest(unittest.TestCase):
         super(RaspberryTest, self).__init__(*args, **kwargs)
         self.raspberry = Raspberry()
 
-    def test_singleton(self):
+    def test_get_uuid(self):
         """
-            Test the singleton pattern of the class Raspberry
-        -OK: Every Raspberry instance created is the same, only one unique instance can be created
+            Test the Raspberry Pi object has an uuid attribute (partition key in DynamoDB)
+        -OK: uuid exists
         """
-        r1 = Raspberry()
-        r2 = Raspberry()
-        self.assertTrue(r1 == r2)
+        self.assertTrue(self.raspberry.uuid)
 
     def test_get_device(self):
         """
-            Test the device name of the Raspberry object
+            Test the device name of the Raspberry object (sort key in DynamoDB)
         -OK: Device name 'raspberry'
         """
         self.assertTrue(self.raspberry.device == 'raspberry')
+
+    def test_get_throttled(self):
+        """
+            Test the Raspberry Pi object has a throttled attribute
+        -OK: throttled exists
+        """
+        self.assertTrue(self.raspberry.throttled)
 
 
 if __name__ == '__main__':
