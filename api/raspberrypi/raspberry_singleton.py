@@ -1,6 +1,7 @@
 import vcgencmd
 import subprocess
 from datetime import datetime
+import uuid
 
 
 class Raspberry(object):
@@ -9,6 +10,7 @@ class Raspberry(object):
     """
     _raspberry_instance = None  # Initialize the instance to 'None' for Singleton Pattern
 
+    _uuid = None
     _device = None
     _gpu_temp_celsius = None
     _cpu_temp_celsius = None
@@ -31,6 +33,8 @@ class Raspberry(object):
             cls._raspberry_instance = super(Raspberry, cls).__new__(cls)
 
             my_cmd = vcgencmd.Vcgencmd()
+
+            cls._uuid = uuid.uuid4()  # Generates a random and secured UUID.
             cls._device = "raspberry"
             cls._gpu_temp_celsius = my_cmd.measure_temp()
 
@@ -53,7 +57,11 @@ class Raspberry(object):
 
         return cls._raspberry_instance
 
-    # --- GETTERS  ---#
+    # --- GETTERS [NO SETTERS - DATA CANNOT BE MODIFIED] ---#
+    @property
+    def uuid(self):
+        return self._uuid
+
     @property
     def device(self):
         return self._device
