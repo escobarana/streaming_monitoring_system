@@ -106,13 +106,13 @@ variable "region" {
 # --- COMMENT THESE TWO VARIABLES BELOW WHEN AUTOMATIZING THE DEPLOYMENT WITH GITHUB ACTIONS --- #
 
 # This variable defines the AWS ACCESS KEY.
-//variable "access_key" {
-//  type          = string
-//  sensitive     = true
-//}
-//
-//# This variable defines the AWS SECRET ACCESS KEY.
-//variable "secret_access_key" {
-//  type          = string
-//  sensitive     = true
-//}
+# variable "access_key" {
+#   type          = string
+#   sensitive     = true
+# }
+
+# This variable defines the AWS SECRET ACCESS KEY.
+# variable "secret_access_key" {
+#   type          = string
+#   sensitive     = true
+# }

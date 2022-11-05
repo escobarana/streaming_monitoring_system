@@ -29,6 +29,6 @@ provider "docker" {}  # Pull the image from Docker Hub
 provider "aws" {  # Configure AWS
   region = var.region
   # --- COMMENT THESE TWO VARIABLES BELOW WHEN AUTOMATIZING THE DEPLOYMENT WITH GITHUB ACTIONS --- #
-//  access_key = var.access_key
-//  secret_key = var.secret_access_key
+  # access_key = var.access_key
+  #  secret_key = var.secret_access_key
 }
