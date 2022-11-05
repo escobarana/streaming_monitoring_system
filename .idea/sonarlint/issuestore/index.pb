@@ -11,37 +11,15 @@ G
 model/data_retriever.py,6\4\6462df8adec1e51f7f2307f9f8b45232b672fe9e
 F
 generators/__init__.py,0\0\008d301e53776433f661375e1f3b8c19970342f6
-?
-api/__init__.py,4\a\4a6406639b54c66f60832033746cf3ac6c6007bc
-K
-api/raspberrypi/__init__.py,b\b\bbc3770f5aee9d51a2e3fd07b933f0d1713e3275
-V
-&api/raspberrypi/raspberry_singleton.py,7\4\74e302cb4f164a76f798cc3e70f244a0421a5d68
-K
-api/tests/raspberry_test.py,3\5\35404cc685cbf486c09183c2273bbc4b05dfad35
-L
-generators/kafka/producer.py,4\4\44c4c05c6719a5462a492f8c56e5d0c03701233c
-T
-$api/kafka/consumer_to_clean_topic.py,1\1\117607c237609a4ce01b18c60d4a38a2a745173d
 M
 api/kafka/config_consumer.ini,1\2\127abe8c9cf6772ee6c22611eb1d718a5f9d248c
 I
 api/kafka/cpu_consumer.py,e\0\e06cdd4744565779032a76889baed323a56bb6fd
 G
 api/templates/base.html,3\6\36b49ecdf12decbd6c050382c2e8525f07bccb6b
-A
-generators/amr.py,a\a\aa770488052dccbe07ce2e3ee60f154666a61a4e
-A
-generators/ana.py,0\9\094eb7d634a7886de9cf2577b2e5ab58b896f99c
 B
 generators/aziz.py,3\5\355ded33203b28841417f5fa71130d38cd0fee56
 P
  generators/batchProducerAziz.bat,4\2\4238416e3ae3a1f686534cfaae62ecf8a66c4dad
 O
-generators/batchProducerAna.bat,c\a\cafecb6815b6dde252861ac53349e59679f593f0
-O
 generators/batchProducerAmr.bat,f\7\f75c93931302d85fd9dcf270bbf2734b55be8308
-9
-	README.md,8\e\8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
-I
-api/tests/restapi_test.py,4\1\41cf7eda9ce3cb53a61e0c00c247c1b449019f47

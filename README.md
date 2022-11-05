@@ -53,16 +53,16 @@ sensor record sent to the kafka topic will have this structure having always pro
 Download image:
 
 ```shell
-cd api
+  cd api
 ``` 
 ```shell
-docker pull -t escobarana/sensorsapi:latest
+  docker pull -t escobarana/sensorsapi:latest
 ```
 
 Run image:
 
 ```shell
-docker run -p 5000:5000 -t -i escobarana/sensorsapi:latest --env-file .env
+  docker run -p 5000:5000 -t -i escobarana/sensorsapi:latest --env-file .env
 ```
 
 ## Run locally
@@ -70,23 +70,53 @@ docker run -p 5000:5000 -t -i escobarana/sensorsapi:latest --env-file .env
 OpenHardwareMonitor software must be running before launching the instance. 
 *https://openhardwaremonitor.org/*
 
-Install prerequisites:
+Install prerequisites (if the `requirements.txt` installation fails see *Notes for further details):
 
 ```shell
-pip install -r requirements.txt
+  pip install -r requirements.txt
 ```
 Run tests
 ```shell
-cd api
+  cd api
 ```
 ```shell
-python -m unittest tests/__init__.py
+  python -m unittest tests/__init__.py
 ```
 
 Run Flask REST API
 ```shell
-cd api
+  cd api
 ```
 ```shell
-python app.py
+  python app.py
+```
+
+
+## *Notes
+The `WMI` library only works in Windows OS, if you're running the code in any other OS use the `Raspberry Pi` 
+configuration, comment this library in the `requirements.txt` file.
+
+
+When working with an OS different than Windows (with `aarch64`), to install `confluent-kafka` library you might 
+encounter some incompatibility errors since they do not provide prebuilt binary wheels for `aarch64`. You will need to 
+compile it yourself, which requires to first build and install `librdkafka` from source. Follow this steps:
+
+```shell
+    sudo apt-get install -y libssl-dev zlib1g-dev gcc g++ make
+    git clone https://github.com/edenhill/librdkafka
+    cd librdkafka
+    ./configure --prefix=/usr
+    make
+    pip install confluent-kafka
+```
+
+If after this installation you try to run the code and get the following error: `Undefined Symbol: rd_kafka_producev` 
+it is most likely because you have an earlier version installed in `/usr` and the newest version you just installed is
+located in `/usr/local` and it will not be picked up automatically. 
+You can check it by running `sudo apt-get purge librdkafka1 librdkafka-dev`.
+
+To solve this issue you have to remove the previous versions from the deb package:
+
+```shell
+  sudo apt-get purge librdkafka1 librdkafka-dev
 ```

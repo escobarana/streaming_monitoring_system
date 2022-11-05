@@ -1,1 +1,1 @@
-from raspberrypi.raspberry_singleton import Raspberry
+from raspberrypi.raspberry import Raspberry
