@@ -83,24 +83,19 @@ class KafkaProducer:
         :return:
         """
         # https://docs.confluent.io/platform/current/installation/configuration/producer-configs.html
-        print(f"Producing raspberry pi records to topic {topic_name}.")
-        while True:
-            # Serve on_delivery callbacks from previous calls to produce()
-            self.producer.poll(0.0)
-            try:
-                self.producer.produce(topic=topic_name,
-                                      key=self.string_serializer(str(uuid4()),
-                                                                 SerializationContext(topic_name, MessageField.VALUE)),
-                                      value=self.json_serializer(data,
-                                                                 SerializationContext(topic_name, MessageField.VALUE)),
-                                      on_delivery=delivery_report)
-            except KeyboardInterrupt:
-                break
-            except ValueError:
-                print("Invalid input, discarding record...")
-                continue
+        print(f"Producing raspberry pi record to topic {topic_name}.")
+        # Serve on_delivery callbacks from previous calls to produce()
+        self.producer.poll(0.0)
 
-        print("n\Flushing records...")
+        self.producer.produce(topic=topic_name,
+                              key=self.string_serializer(str(uuid4()),
+                                                         SerializationContext(topic_name, MessageField.VALUE)),
+                              value=self.json_serializer(data,
+                                                         SerializationContext(topic_name, MessageField.VALUE)),
+                              on_delivery=delivery_report)
+
+
+        print("n\Flushing record...")
         self.producer.flush()
 
         print(f'Produced json encoded record to topic {topic_name}')
