@@ -1,7 +1,7 @@
 map_device_mode = {
     "pc1": "model/exported_models/pc1_model.bin",
     "pc2": "model/exported_models/pc1_model.bin",
-    "rassberry": "model/exported_models/raspb_model.bin"
+    "raspberry": "model/exported_models/raspb_model.bin"
 }
 
 pc2_local_data_path = "data/datasetWithOnesAndZeros2.csv"
@@ -22,7 +22,7 @@ rasb_features = ['GPU_temp_celsius', 'CPU_temp_celsius',
 map_device_x = {
     "pc1": pc1_features,
     "pc2": pc2_features,
-    "rassberry": rasb_features
+    "raspberry": rasb_features
 }
 
 raspb_target = ['throttled']

@@ -3,9 +3,6 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn import metrics
-import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
 import pickle
 
 data = pd.read_csv(config.rasb_local_data_path, sep=';', decimal=",", index_col=False)
