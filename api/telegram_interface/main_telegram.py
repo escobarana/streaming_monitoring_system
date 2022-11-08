@@ -2,6 +2,7 @@ import os
 from telegram_interface import config
 from telegram_interface import utils
 import telebot
+import time
 
 # bot = telebot.TeleBot(config.bot_token)
 # CHAT_ID = -845538645
@@ -53,8 +54,11 @@ def send_welcome(message):
 def main():
     chat_id = os.environ["TELEGRAM_CHAT_ID"]
     bot.send_message(chat_id=chat_id, text='The bot started!')
-    # Infinite loop
-    bot.infinity_polling()
+    try:
+        # Infinite loop
+        bot.infinity_polling(True)
+    except:
+        time.sleep(10)
 
 
 if __name__ == '__main__':

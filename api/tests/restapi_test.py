@@ -1,5 +1,6 @@
 import unittest
 import app as tested_app
+from telegram_interface import main_telegram
 
 
 class RestAPITest(unittest.TestCase):
