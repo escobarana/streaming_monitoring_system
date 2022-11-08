@@ -11,8 +11,6 @@ RUN pip install -U pip && \
 
 RUN rm requirements.txt
 
-ENV DEVICE PC
-
 EXPOSE 5000
 
 # Run Flask App

@@ -1,5 +1,6 @@
 import unittest
 import app as tested_app
+from telegram_interface import main_telegram
 
 
 class RestAPITest(unittest.TestCase):
@@ -16,26 +17,60 @@ class RestAPITest(unittest.TestCase):
 
     def test_get_homepage(self):
         """
-            Test get /home route
+            Test get / route
         -OK: Status code 200
         """
-        r = self.app.get('/home')
+        r = self.app.get('/')
         self.assertEqual(r.status_code, 200)
 
-    def test_get_results_endpoint(self):
+    def test_get_pc1(self):
         """
-            Test get /results route
+            Test get /devices/pc1 route
         -OK: Status code 200
         """
-        r = self.app.get('/results')
+        r = self.app.get('/devices/pc1')
         self.assertEqual(r.status_code, 200)
 
-    def test_get_doc_main_endpoint(self):
+    # TODO: Uncomment when data available in DynamoDb
+    # def test_get_pc1_status(self):
+    #     """
+    #         Test get /devices/pc1/status route
+    #     -OK: Status code 200
+    #     """
+    #     r = self.app.get('/devices/pc1/status')
+    #     self.assertEqual(r.status_code, 200)
+
+    def test_get_pc2(self):
         """
-            Test get documentation main route
+            Test get /devices/pc2 route
         -OK: Status code 200
         """
-        r = self.app.get('/doc/')
+        r = self.app.get('/devices/pc2')
+        self.assertEqual(r.status_code, 200)
+
+    # TODO: Uncomment when data available in DynamoDb
+    # def test_get_pc2_status(self):
+    #     """
+    #         Test get /devices/pc2/status route
+    #     -OK: Status code 200
+    #     """
+    #     r = self.app.get('/devices/pc2/status')
+    #     self.assertEqual(r.status_code, 200)
+
+    def test_get_raspberry(self):
+        """
+            Test get /devices/raspberry route
+        -OK: Status code 200
+        """
+        r = self.app.get('/devices/raspberry')
+        self.assertEqual(r.status_code, 200)
+
+    def test_get_raspberry_status(self):
+        """
+            Test get /devices/raspberry/status route
+        -OK: Status code 200
+        """
+        r = self.app.get('/devices/raspberry/status')
         self.assertEqual(r.status_code, 200)
 
 
