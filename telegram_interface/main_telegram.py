@@ -1,11 +1,10 @@
-
-
 import telebot
 from telebot.apihelper import ApiTelegramException
+import os
 
-bot = telebot.TeleBot("5335139215:AAGRlCYb3QtZL6jUo73Lmos2UeuRzgbApXA")
+if __name__ == '__main__':
+    bot = telebot.TeleBot(f"{os.environ['TELEGRAM_TELEBOT_NUM']}:{os.environ['TELEGRAM_TELEBOT_TEXT']}")
 
-CHAT_ID = -845538645
+    chat_id = os.environ["TELEGRAM_CHAT_ID"]
 
-
-bot.send_message(CHAT_ID,'This is from bot')
+    bot.send_message(chat_id=chat_id, text='This is from bot')

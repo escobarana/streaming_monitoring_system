@@ -1,9 +1,3 @@
+template_pc2 = ""
 
-
-template_pc2= """
-
-              """
-
-
-
-link_model_1= ""
+link_model_1 = ""
