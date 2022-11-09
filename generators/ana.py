@@ -1,5 +1,4 @@
 import time
-
 from api.raspberrypi.raspberry import Raspberry
 import os
 import json
@@ -33,13 +32,21 @@ def data_push():
     """
     # Loads the environmental variables within the .env file
     load_dotenv()
-    topic = os.environ['TOPIC_NAME_IOT']
+    topic = os.environ['TOPIC_NAME']
     raspberry = Raspberry().json
     KafkaProducer().produce_json(topic_name=topic, data=raspberry)
     # write_local(raspberry)
 
 
-if __name__ == "__main__":
+def main():
+    """
+        Main method of the file. Infinite loop to produce records to the kafka topic
+    :return: None
+    """
     while True:  # infinite loop
         data_push()
         time.sleep(5)  # Every 5 seconds to avoid data repetition in small periods of time
+
+
+if __name__ == "__main__":
+    main()

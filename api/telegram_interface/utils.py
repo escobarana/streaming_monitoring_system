@@ -22,15 +22,14 @@ def download_model(url):
         return False
 
 
-def get_data_dynamodb(device):
+def get_data_dynamodb(device: str):
     """
         This function returns all documents on dynamodb from the given device based on an index
-        :param device: The device name to filter the query by
+    :param device: The device name to filter the query by ['raspberry', 'pc1', 'pc2']
     :return: last element from the executed query, which is the last element loaded produced by the device
     """
     query_response = dynamodb.Table('sensors_data').scan(FilterExpression=Attr("device").eq(device),
                                                          IndexName="device-loading_datetime-index")
-    # print(query_response["Items"][-1])
     # Return the last element loaded, with latest loading_datetime
     return query_response["Items"][-1]
 
@@ -52,20 +51,35 @@ class Predict:
         self.pc2_model_url = url_pc2
         self.rasb_model_url = url_rasb
 
-    def predict_output(self, device):
+    def predict_output(self, device: str):
         """
-
-        :param device:
-        :return:
+            This function predicts the output value whether the device will need technical intervention or not based on
+            the last produced record from the device
+        :param device: device name
+        :return: last data record and prediction
         """
         url = ""
         data_input = []
         if device == "pc1":
             url = self.pc1_model_url
             logging.info("URL Device: PC1")
+            val = get_data_dynamodb(device)
+            for i, elt in enumerate(config.pc1_features):
+                for data in val:
+                    if data == elt:
+                        print(i, data, val[data])
+                        data_input.append(float(val[data]))
+
         elif device == "pc2":
             url = self.pc2_model_url
             logging.info("URL Device: PC2")
+            val = get_data_dynamodb(device)
+            for i, elt in enumerate(config.pc2_features):
+                for data in val:
+                    if data == elt:
+                        print(i, data, val[data])
+                        data_input.append(float(val[data]))
+
         elif device == "raspberry":
             url = self.rasb_model_url
             logging.info("URL Device: RASPBERRY")

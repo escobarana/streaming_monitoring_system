@@ -1,33 +1,33 @@
 """
     Configuration file with templates to write the data in the Telegram channel
 """
-template_message_pc1 = "PC 1\n" + \
-                       " 🕒 ClockCPUCoreOne         :        \n" + \
-                       " 🌡️ TemperatureCPUPackage   :  \n" + \
-                       " ⌛ LoadCPUTotal            :           \n" + \
-                       " ⚡ PowerCPUPackage          :          \n" + \
-                        " --------------------------------- \n" + \
-                        " Prediction             :  "
-
 template_message_pc2 = "PC 2\n" + \
-                       " 🕒 ClockCPUCoreOne         :        \n" + \
-                       " 🌡️ TemperatureCPUPackage   :  \n" + \
-                       " ⌛ LoadCPUTotal            :           \n" + \
-                       " ⚡ PowerCPUPackage          :         \n" + \
-                       " 🌡️ TemperatureGPUCore      :     \n" + \
-                       " ⌛ LoadGPUCore: \n" + \
-                        " --------------------------------- \n" + \
-                        " Prediction             :  "
+                       " 🕒 ClockCPUCoreOne          : {var1} \n" + \
+                       " 🌡️ TemperatureCPUPackage   : {var2} \n" + \
+                       " ⌛ LoadCPUTotal             : {var3} \n" + \
+                       " ⚡ PowerCPUPackage          : {var4} \n" + \
+                       " --------------------------------- \n" + \
+                       " 📊 Prediction               : {var5} "
 
-template_message_rasp = "Raspberry\n" + \
+template_message_pc1 = "PC 1\n" + \
+                       " 🕒 ClockCPUCoreOne          : {var1} \n" + \
+                       " 🌡️ TemperatureCPUPackage   : {var2} \n" + \
+                       " ⌛ LoadCPUTotal             : {var3} \n" + \
+                       " ⚡ PowerCPUPackage          : {var4} \n" + \
+                       " 🌡️ TemperatureGPUCore      : {var5} \n" + \
+                       " ⌛ LoadGPUCore              : {var6} \n" + \
+                       " --------------------------------- \n" + \
+                       " 📊 Prediction               : {var7} "
+
+template_message_rasp = "RASPBERRY PI 4B \n" + \
                         " 🕒 ClockCPUCoreOne         : {var1} \n" + \
-                        " 🌡️ TemperatureCPUPackage   : {var2} \n" + \
+                        " 🌡️ TemperatureCPUPackage  : {var2} \n" + \
                         " ⌛ LoadCPUTotal            : {var3} \n" + \
-                        " ⚡ PowerCPUPackage          : {var4} \n" + \
-                        " 🌡️ TemperatureGPUCore      : {var5} \n" + \
+                        " ⚡ PowerCPUPackage         : {var4} \n" + \
+                        " 🌡️ TemperatureGPUCore     : {var5} \n" + \
                         " ⌛ LoadGPUCore             : {var6} \n" + \
                         " --------------------------------- \n" + \
-                        " Prediction             : {var7} "
+                        " 📊 Prediction              : {var7} "
 
 pc2_features = ['ClockCPUCoreOne', 'TemperatureCPUPackage', 'LoadCPUTotal', 'PowerCPUPackage']
 
