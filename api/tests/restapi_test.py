@@ -1,6 +1,5 @@
 import unittest
 import app as tested_app
-from telegram_interface import main_telegram
 
 
 class RestAPITest(unittest.TestCase):
@@ -31,14 +30,13 @@ class RestAPITest(unittest.TestCase):
         r = self.app.get('/devices/pc1')
         self.assertEqual(r.status_code, 200)
 
-    # TODO: Uncomment when data available in DynamoDb
-    # def test_get_pc1_status(self):
-    #     """
-    #         Test get /devices/pc1/status route
-    #     -OK: Status code 200
-    #     """
-    #     r = self.app.get('/devices/pc1/status')
-    #     self.assertEqual(r.status_code, 200)
+    def test_get_pc1_status(self):
+        """
+            Test get /devices/pc1/status route
+        -OK: Status code 200
+        """
+        r = self.app.get('/devices/pc1/status')
+        self.assertEqual(r.status_code, 200)
 
     def test_get_pc2(self):
         """
@@ -48,14 +46,13 @@ class RestAPITest(unittest.TestCase):
         r = self.app.get('/devices/pc2')
         self.assertEqual(r.status_code, 200)
 
-    # TODO: Uncomment when data available in DynamoDb
-    # def test_get_pc2_status(self):
-    #     """
-    #         Test get /devices/pc2/status route
-    #     -OK: Status code 200
-    #     """
-    #     r = self.app.get('/devices/pc2/status')
-    #     self.assertEqual(r.status_code, 200)
+    def test_get_pc2_status(self):
+        """
+            Test get /devices/pc2/status route
+        -OK: Status code 200
+        """
+        r = self.app.get('/devices/pc2/status')
+        self.assertEqual(r.status_code, 200)
 
     def test_get_raspberry(self):
         """

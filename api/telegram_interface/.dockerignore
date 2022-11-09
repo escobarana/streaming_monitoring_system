@@ -6,7 +6,6 @@ docker-compose*.yml
 .git/*
 .gitignore
 .dockerignore
-telegram_interface/*
 
 # Created by .ignore support plugin (hsz.mobi)
 ### VirtualEnv template

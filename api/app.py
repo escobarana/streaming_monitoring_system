@@ -1,25 +1,14 @@
-# from werkzeug.middleware.dispatcher import DispatcherMiddleware
-# from werkzeug.serving import run_simple
 from flask import Flask
 from flask_restx import Api, Resource, fields
-# from werkzeug.middleware.dispatcher import DispatcherMiddleware
-# from werkzeug.serving import run_simple
-from telegram_interface import main_telegram
 from helpers.queries import get_all_data, get_data_device, get_device_status
 import logging
 
 logging.basicConfig()
 logger = logging.getLogger(__name__)
 
-# Blueprint definition for monitoring purposes
-# MAIN = Blueprint("main", __name__)
 
 # Start Flask API
 app = Flask(__name__)
-
-# Start the Telegram Bot
-main_telegram.main()
-# metrics = PrometheusMetrics(app, group_by='endpoint')  # Prometheus monitoring
 
 api = Api(app,
           version='1.0',
@@ -33,21 +22,21 @@ ns = api.namespace('devices', description='operations')
 pc1 = api.model('PC1', {
     'uuid': fields.String(required=True, description="Universal Unique Identifier"),
     'device': fields.String(required=True, description="The name of the device (pc1)."),
-    'ClockCPUCoreOne': fields.String(required=True, description="TODO."),
-    'TemperatureCPUPackage': fields.String(required=True, description="TODO."),
-    'LoadCPUTotal': fields.String(required=True, description="TODO."),
-    'PowerCPUPackage': fields.String(required=True, description="TODO."),
-    'TemperatureGPUCore': fields.String(required=True, description="TODO."),
-    'LoadGPUCore': fields.String(required=True, description="TODO.")
+    'ClockCPUCoreOne': fields.String(required=True, description="Clock CPU in Core 1."),
+    'TemperatureCPUPackage': fields.String(required=True, description="CPU Package Temperature in ºC."),
+    'LoadCPUTotal': fields.String(required=True, description="Total Load of the CPU."),
+    'PowerCPUPackage': fields.String(required=True, description="Power of the CPU package."),
+    'TemperatureGPUCore': fields.String(required=True, description="GPU Core Temperature in ºC."),
+    'LoadGPUCore': fields.String(required=True, description="Load GPU Core.")
 })
 
 pc2 = api.model('PC2', {
     'uuid': fields.String(required=True, description="Universal Unique Identifier"),
     'device': fields.String(required=True, description="The name of the device (pc2)."),
-    'ClockCPUCoreOne': fields.String(required=True, description="TODO."),
-    'TemperatureCPUPackage': fields.String(required=True, description="TODO."),
-    'LoadCPUTotal': fields.String(required=True, description="TODO."),
-    'PowerCPUPackage': fields.String(required=True, description="TODO.")})
+    'ClockCPUCoreOne': fields.String(required=True, description="Clock CPU in Core 1."),
+    'TemperatureCPUPackage': fields.String(required=True, description="CPU Package Temperature in ºC."),
+    'LoadCPUTotal': fields.String(required=True, description="Total Load of the CPU."),
+    'PowerCPUPackage': fields.String(required=True, description="Power of the CPU package.")})
 
 rasp = api.model('Raspberry', {
     'uuid': fields.String(required=True, description="Universal Unique Identifier"),
@@ -150,16 +139,5 @@ class RaspStatus(Resource):
 # --- END ENDPOINTS --- #
 
 
-# --- MONITORING --- #
-# Provide app's version and deploy environment/config name to set a gauge metric
-# app.register_blueprint(MAIN)
-# register_metrics(app, app_version="v1.0", app_config="staging")
-
-# Plug metrics WSGI app to the app with dispatcher
-# dispatcher = DispatcherMiddleware(app.wsgi_app, {"/metrics": make_wsgi_app()})
-# --- MONITORING --- #
-
-
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
-    # run_simple(hostname="0.0.0.0", port=5000, application=dispatcher)

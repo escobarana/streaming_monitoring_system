@@ -1,5 +1,5 @@
 import wmi
-from api.sensors.sensor import Sensor
+from generators.sensors.sensor import Sensor
 import uuid
 from datetime import datetime
 

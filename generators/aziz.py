@@ -1,8 +1,12 @@
 import os
 import time
-from api.sensors.measures import Measures
+# from decimal import Decimal
+
+from generators.sensors.measures import Measures
 from kafka.producer import KafkaProducer
 from dotenv import load_dotenv
+# from dynamodb import dynamodb
+# import json
 
 
 def data_push(device: str):
@@ -15,6 +19,8 @@ def data_push(device: str):
     load_dotenv()
     topic = os.environ['TOPIC_NAME']
     pc = Measures().get_desired_data(device_name=device)
+    # item = json.loads(json.dumps(pc), parse_float=Decimal)
+    # dynamodb.Table('sensors_data').put_item(Item=item)
     KafkaProducer().produce_json(topic_name=topic, data=pc)
 
 

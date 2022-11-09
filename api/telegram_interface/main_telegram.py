@@ -1,13 +1,8 @@
 import os
-from telegram_interface import config
-from telegram_interface import utils
+import config
+import utils
 import telebot
 import time
-
-# TODO to be deleted !
-# bot = telebot.TeleBot(config.bot_token)
-# CHAT_ID = -845538645
-# bot.send_message(CHAT_ID,config.template_message_pc2)
 
 bot = telebot.TeleBot(os.environ['TELEGRAM_API_TOKEN'])
 

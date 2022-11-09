@@ -1,7 +1,7 @@
-from telegram_interface import config
+import config
 import requests
 from boto3.dynamodb.conditions import Attr
-from helpers.dynamodb import dynamodb
+from dynamodb_config import dynamodb
 import pickle
 import logging
 
@@ -99,6 +99,9 @@ class Predict:
         data = data_input
 
         # Make prediction based on the deployed model
-        prediction = model.predict([data_input])
+        if device == 'pc2':
+            prediction = model.predict([data_input + [0, 0]])
+        else:
+            prediction = model.predict([data_input])
 
         return data, prediction

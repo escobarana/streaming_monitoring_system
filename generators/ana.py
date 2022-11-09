@@ -1,5 +1,5 @@
 import time
-from api.raspberrypi.raspberry import Raspberry
+from generators.raspberrypi import Raspberry
 import os
 import json
 from dotenv import load_dotenv
