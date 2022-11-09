@@ -1,10 +1,10 @@
 from uuid import uuid4
-
 from confluent_kafka import Producer
 from confluent_kafka.serialization import StringSerializer, SerializationContext, MessageField
 from confluent_kafka.schema_registry import SchemaRegistryClient
 from confluent_kafka.schema_registry.json_schema import JSONSerializer
-from generators.kafka.raspberry_sensor_schema import schema as schema_str
+from generators.kafka.raspberry_sensor_schema import schema as schema_rasp_str
+from generators.kafka.pc_sensor_schema import schema as schema_pc_str
 import os
 
 
@@ -53,7 +53,10 @@ class KafkaProducer:
                                 'basic.auth.user.info': f"{os.environ['SCHEMA_USERNAME']}:{os.environ['SCHEMA_PASSWORD']}"
                                 }
         schema_registry_client = SchemaRegistryClient(schema_registry_conf)
-        self.json_serializer = JSONSerializer(schema_str, schema_registry_client, sensor_to_dict)
+        if os.environ['TOPIC_NAME'] == 'pc':
+            self.json_serializer = JSONSerializer(schema_pc_str, schema_registry_client, sensor_to_dict)
+        elif os.environ['TOPIC_NAME'] == 'raspberry':
+            self.json_serializer = JSONSerializer(schema_rasp_str, schema_registry_client, sensor_to_dict)
         self.string_serializer = StringSerializer('utf_8')
         self.producer = Producer(conf)
 
@@ -64,14 +67,14 @@ class KafkaProducer:
         :param value: the value record to be sent to the kafka topic
         :return:
         """
-        print(f"Producing raspberry pi records to topic {topic_name}.")
+        print(f" ---- Producing records to topic {topic_name} --- ")
         self.producer.produce(topic=topic_name, key=str(uuid4()), value=value)
 
         # Wait up to 1 second for events. Callbacks will be invoked during his method call
         # if the message is acknowledged.
         # self.producer.poll(1)
 
-        print("n\Flushing records...")
+        print("\nFlushing records...")
         self.producer.flush(30)  # send the data
         print(f'Produced to topic {topic_name}')
 
@@ -83,7 +86,7 @@ class KafkaProducer:
         :return:
         """
         # https://docs.confluent.io/platform/current/installation/configuration/producer-configs.html
-        print(f"Producing raspberry pi record to topic {topic_name}.")
+        print(f" --- Producing record to topic {topic_name} --- ")
         # Serve on_delivery callbacks from previous calls to produce()
         self.producer.poll(0.0)
 
@@ -94,8 +97,7 @@ class KafkaProducer:
                                                          SerializationContext(topic_name, MessageField.VALUE)),
                               on_delivery=delivery_report)
 
-
-        print("n\Flushing record...")
+        print("\nFlushing record...")
         self.producer.flush()
 
         print(f'Produced json encoded record to topic {topic_name}')

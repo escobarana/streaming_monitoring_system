@@ -1,3 +1,4 @@
+"""This file represents the topic 'raspberry' schema for data validation purposes"""
 schema = """
 {
   "description": "Raspberry Pi measurements",
