@@ -2,7 +2,7 @@ import json
 from decimal import Decimal
 from boto3.dynamodb.conditions import Attr
 from helpers.dynamodb import dynamodb
-from telegram_interface import utils
+from helpers import predictor
 
 
 class DecimalEncoder(json.JSONEncoder):
@@ -42,6 +42,6 @@ def get_device_status(device: str) -> dict:
         This function returns the status in real-time of the device specified
     :return: message specifying the current status of the device
     """
-    data, prediction = utils.Predict().predict_output(device)
+    data, prediction = predictor.Predict().predict_output(device)
     msg = "No technical intervention required" if prediction[0] else "Technical intervention required"
     return {'msg': msg}
