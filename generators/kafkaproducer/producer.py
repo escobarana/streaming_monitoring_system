@@ -3,8 +3,8 @@ from confluent_kafka import Producer
 from confluent_kafka.serialization import StringSerializer, SerializationContext, MessageField
 from confluent_kafka.schema_registry import SchemaRegistryClient
 from confluent_kafka.schema_registry.json_schema import JSONSerializer
-from generators.kafka.raspberry_sensor_schema import schema as schema_rasp_str
-from generators.kafka.pc_sensor_schema import schema as schema_pc_str
+from generators.kafkaproducer.raspberry_sensor_schema import schema as schema_rasp_str
+from generators.kafkaproducer.pc_sensor_schema import schema as schema_pc_str
 import os
 
 

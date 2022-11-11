@@ -1,10 +1,10 @@
 # syntax=docker/dockerfile:1
 FROM python:3.8
 
-RUN mkdir "telegram_interface"
-COPY . /telegram_interface
+RUN mkdir "telegrambot"
+COPY . /telegrambot
 
-WORKDIR telegram_interface
+WORKDIR telegrambot
 
 RUN pip install -U pip && \
     pip install --no-cache-dir -v -r requirements.txt

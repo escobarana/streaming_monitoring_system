@@ -4,7 +4,7 @@ import os
 import json
 from dotenv import load_dotenv
 
-from kafka.producer import KafkaProducer
+from kafkaproducer.producer import KafkaProducer
 
 
 def write_local(data, filename='sample.json'):
@@ -40,7 +40,7 @@ def data_push():
 
 def main():
     """
-        Main method of the file. Infinite loop to produce records to the kafka topic
+        Main method of the file. Infinite loop to produce records to the kafkaproducer topic
     :return: None
     """
     while True:  # infinite loop

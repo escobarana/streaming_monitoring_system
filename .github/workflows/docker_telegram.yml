@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./api/telegram_interface
+        working-directory: ./telegrambot
     steps:
       - name: Git checkout
         uses: actions/checkout@v3
@@ -49,6 +49,6 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
-          context: ./api/telegram_interface
+          context: ./telegrambot
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/telegrambot:latest

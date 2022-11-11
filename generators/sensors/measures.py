@@ -4,7 +4,7 @@ import uuid
 from datetime import datetime
 
 
-class Measures:
+class Measures(object):
     """
         Class Measures which measures different types of CPU sensors (Temperature, Power, Load)
     """

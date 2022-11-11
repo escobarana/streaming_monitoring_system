@@ -1,6 +1,7 @@
 import config
 import requests
 from boto3.dynamodb.conditions import Attr
+from kafkaconsumer.consumer import KafkaConsumer
 from dynamodb_config import dynamodb
 import pickle
 import logging
@@ -51,6 +52,36 @@ class Predict:
         self.pc2_model_url = url_pc2
         self.rasb_model_url = url_rasb
 
+        self.current_message = None
+
+    def get_data_consumer(self, topic: str):
+        """
+            This function consumes data from the specified topic
+        :return: last element from the executed query, which is the last element loaded produced by the device
+        """
+        KafkaConsumer().serializing_consumer.subscribe([topic])
+
+        while True:
+            try:
+                msg = KafkaConsumer().serializing_consumer.poll(1.0)
+                if msg is None:
+                    continue
+
+                message = msg.value()  # ¡¡ THE MESSAGE CONSUMED !! #
+                if message is not None:
+                    # Assign the message to make the prediction and store it in DynamoDb
+                    self.current_message = message
+                    print(f'[\n'
+                          f'\tNew measure: \n'
+                          f'\tuuid: {message.uuid}\n'
+                          f'\tdevice: {message.device}\n'
+                          f'\tloading_datetime: {message.loading_datetime}\n')
+            except KeyboardInterrupt:
+                break
+
+        print('Closing the Consumer ...')
+        KafkaConsumer().serializing_consumer.close()
+
     def predict_output(self, device: str):
         """
             This function predicts the output value whether the device will need technical intervention or not based on
@@ -63,6 +94,7 @@ class Predict:
         if device == "pc1":
             url = self.pc1_model_url
             logging.info("URL Device: PC1")
+            self.get_data_consumer(topic=device)  # self.current_message contains current message consumed
             val = get_data_dynamodb(device)
             for i, elt in enumerate(config.pc1_features):
                 for data in val:
@@ -73,6 +105,7 @@ class Predict:
         elif device == "pc2":
             url = self.pc2_model_url
             logging.info("URL Device: PC2")
+            self.get_data_consumer(topic=device)  # self.current_message contains current message consumed
             val = get_data_dynamodb(device)
             for i, elt in enumerate(config.pc2_features):
                 for data in val:
@@ -83,6 +116,7 @@ class Predict:
         elif device == "raspberry":
             url = self.rasb_model_url
             logging.info("URL Device: RASPBERRY")
+            self.get_data_consumer(topic=device)  # self.current_message contains current message consumed
             val = get_data_dynamodb(device)
             for i, elt in enumerate(config.rasb_features):
                 for data in val:

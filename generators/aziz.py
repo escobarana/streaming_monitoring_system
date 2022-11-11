@@ -3,7 +3,7 @@ import time
 # from decimal import Decimal
 
 from generators.sensors.measures import Measures
-from kafka.producer import KafkaProducer
+from kafkaproducer.producer import KafkaProducer
 from dotenv import load_dotenv
 # from dynamodb import dynamodb
 # import json
@@ -26,7 +26,7 @@ def data_push(device: str):
 
 def main():
     """
-        Main method of the file. Infinite loop to produce records to the kafka topic
+        Main method of the file. Infinite loop to produce records to the kafkaproducer topic
     :return: None
     """
     while True:  # infinite loop
