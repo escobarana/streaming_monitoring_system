@@ -9,6 +9,7 @@ from kafkaconsumer.schemas.pc_sensor_schema import schema as pc_schema
 from kafkaconsumer.schemas.raspberry_sensor_schema import schema as rasp_schema
 from dynamodb import dynamodb
 import json
+from predictor import Predict
 from decimal import Decimal
 
 running = True
@@ -202,6 +203,11 @@ class KafkaConsumer:
                     else:
                         print(f'device {message.device} does not exist')
 
+                    # make prediction to item
+                    test = Predict()
+                    data, prediction = test.predict_output(device=message.device, data=item)
+                    item['prediction'] = int(prediction[0])  # set prediction to item
+                    # save item in DynamoDB
                     dynamodb.Table('sensors_data').put_item(Item=json.loads(json.dumps(item), parse_float=Decimal))
             except KeyboardInterrupt:
                 break

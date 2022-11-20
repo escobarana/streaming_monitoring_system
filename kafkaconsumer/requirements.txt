@@ -1,0 +1,5 @@
+boto3~=1.26.4
+scikit-learn==1.1.2
+confluent-kafka==1.9.2
+pykafka~=2.8.0
+pandas~=1.5.1
