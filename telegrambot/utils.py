@@ -57,7 +57,7 @@ def get_data_dynamodb(device: str):
     return query_response["Items"][-1]
 
 
-def update_data_dynamodb(uuid: str, device: str, prediction: bool):
+def update_data_dynamodb(uuid: str, device: str, prediction: int):
     """
         This functions updates an item in the DynamoDB table adding the prediction for a given record
     :param uuid: The uuid of the record
@@ -66,7 +66,9 @@ def update_data_dynamodb(uuid: str, device: str, prediction: bool):
     :return:
     """
     dynamodb.Table('sensors_data').update_item(Key={'uuid': uuid, 'device': device},
-                                               AttributeUpdates={'prediction': prediction})
+                                               UpdateExpression="set prediction=:pred",
+                                               ExpressionAttributeValues={':pred': prediction},
+                                               ReturnValues="UPDATED_NEW")
 
 
 class Predict:
@@ -140,6 +142,6 @@ class Predict:
         # Update the item in DynamoDB with the prediction result
         update_data_dynamodb(uuid=val['uuid'],
                              device=device,
-                             prediction=prediction)
+                             prediction=int(prediction[0]))
 
         return data, prediction
