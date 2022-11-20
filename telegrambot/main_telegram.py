@@ -16,15 +16,16 @@ def send_welcome(message):
     """
     test = utils.Predict()
     data, prediction = test.predict_output('pc1')
-    msg = 'No technical intervention required' if prediction[0] else 'Technical intervention required'
-    txt = config.template_message_pc1.format(var1=data[0],
-                                             var2=data[1],
-                                             var3=data[2],
-                                             var4=data[3],
-                                             var5=data[4],
-                                             var6=data[5],
-                                             var7=msg)
-    bot.reply_to(message, txt)
+    techn_interv_needed = not prediction[0]
+    data_to_print = []
+    i = 0
+    for entry in data:
+        one_line = config.rasb_features[i] + [entry]
+        data_to_print.append(one_line)
+        i += 1
+
+    html = utils.get_html_from_table(data_to_print, techn_interv_needed)
+    bot.reply_to(message, html, parse_mode='html')
 
 
 @bot.message_handler(commands=['pc2'])
@@ -36,13 +37,16 @@ def send_welcome(message):
     """
     test = utils.Predict()
     data, prediction = test.predict_output('pc2')
-    msg = 'No technical intervention required' if prediction[0] else 'Technical intervention required'
-    txt = config.template_message_pc2.format(var1=data[0],
-                                             var2=data[1],
-                                             var3=data[2],
-                                             var4=data[3],
-                                             var5=msg)
-    bot.reply_to(message, txt)
+    techn_interv_needed = not prediction[0]
+    data_to_print = []
+    i = 0
+    for entry in data:
+        one_line = config.rasb_features[i] + [entry]
+        data_to_print.append(one_line)
+        i += 1
+
+    html = utils.get_html_from_table(data_to_print, techn_interv_needed)
+    bot.reply_to(message, html, parse_mode='html')
 
 
 @bot.message_handler(commands=['raspberry'])
@@ -54,15 +58,16 @@ def send_welcome(message):
     """
     test = utils.Predict()
     data, prediction = test.predict_output('raspberry')
-    msg = 'No technical intervention required' if prediction[0] else 'Technical intervention required'
-    txt = config.template_message_rasp.format(var1=data[0],
-                                              var2=data[1],
-                                              var3=data[2],
-                                              var4=data[3],
-                                              var5=data[4],
-                                              var6=data[5],
-                                              var7=msg)
-    bot.reply_to(message, txt)
+    techn_interv_needed = prediction[0]
+    data_to_print = []
+    i = 0
+    for entry in data:
+        one_line = config.rasb_features[i] + [entry]
+        data_to_print.append(one_line)
+        i += 1
+
+    html = utils.get_html_from_table(data_to_print, techn_interv_needed)
+    bot.reply_to(message, html, parse_mode='html')
 
 
 def main():

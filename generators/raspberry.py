@@ -2,7 +2,6 @@ import time
 from generators.raspberrypi import Raspberry
 import os
 import json
-from dotenv import load_dotenv
 
 from kafkaproducer.producer import KafkaProducer
 
@@ -30,8 +29,6 @@ def data_push():
         This function sends a json message to the Kafka topic specified from the Raspberry Pi device
     :return: None
     """
-    # Loads the environmental variables within the .env file
-    load_dotenv()
     topic = os.environ['TOPIC_NAME']
     raspberry = Raspberry().json
     KafkaProducer().produce_json(topic_name=topic, data=raspberry)

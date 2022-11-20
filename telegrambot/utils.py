@@ -1,13 +1,35 @@
 import config
+import prettytable as pt
 import requests
 from boto3.dynamodb.conditions import Attr
-from kafkaconsumer.consumer import KafkaConsumer
 from dynamodb_config import dynamodb
 import pickle
 import logging
 
 logging.basicConfig()
 logger = logging.getLogger(__name__)
+
+
+def get_html_from_table(data=[], required_attention=False):
+    """
+        Returns the table format of the inserted data
+    :param data: list of tuples of data
+    :param required_attention: boolean variable that indicates if the machine needs attention
+    :return: html in string format
+    """
+    table = pt.PrettyTable([' S ', '          Metric          ', '   Value    '])
+    table.align['Metric'] = 'l'
+    table.align['Value'] = 'r'
+    for symbol, metric, value in data:
+        table.add_row([symbol, metric, f'{round(value, 2):.2f}'])
+    res = f'<pre>{table}</pre>'
+
+    if not required_attention:
+        res = '\n⚠️⚠️⚠️⚠️⚠️⚠️' + "\n" + res + '\n⚠️⚠️⚠️⚠️⚠️⚠️'
+    else:
+        res = '\n👉👈' + "\n" + res + '\n👉👈'
+
+    return res
 
 
 def download_model(url):
@@ -35,6 +57,18 @@ def get_data_dynamodb(device: str):
     return query_response["Items"][-1]
 
 
+def update_data_dynamodb(uuid: str, device: str, prediction: bool):
+    """
+        This functions updates an item in the DynamoDB table adding the prediction for a given record
+    :param uuid: The uuid of the record
+    :param device: The device name ['raspberry', 'pc1', 'pc2']
+    :param prediction: The prediction made by the model for that item
+    :return:
+    """
+    dynamodb.Table('sensors_data').update_item(Key={'uuid': uuid, 'device': device},
+                                               AttributeUpdates={'prediction': prediction})
+
+
 class Predict:
     """
         Class that predicts whether a device will need technical intervention or not
@@ -52,36 +86,6 @@ class Predict:
         self.pc2_model_url = url_pc2
         self.rasb_model_url = url_rasb
 
-        self.current_message = None
-
-    def get_data_consumer(self, topic: str):
-        """
-            This function consumes data from the specified topic
-        :return: last element from the executed query, which is the last element loaded produced by the device
-        """
-        KafkaConsumer().serializing_consumer.subscribe([topic])
-
-        while True:
-            try:
-                msg = KafkaConsumer().serializing_consumer.poll(1.0)
-                if msg is None:
-                    continue
-
-                message = msg.value()  # ¡¡ THE MESSAGE CONSUMED !! #
-                if message is not None:
-                    # Assign the message to make the prediction and store it in DynamoDb
-                    self.current_message = message
-                    print(f'[\n'
-                          f'\tNew measure: \n'
-                          f'\tuuid: {message.uuid}\n'
-                          f'\tdevice: {message.device}\n'
-                          f'\tloading_datetime: {message.loading_datetime}\n')
-            except KeyboardInterrupt:
-                break
-
-        print('Closing the Consumer ...')
-        KafkaConsumer().serializing_consumer.close()
-
     def predict_output(self, device: str):
         """
             This function predicts the output value whether the device will need technical intervention or not based on
@@ -91,36 +95,31 @@ class Predict:
         """
         url = ""
         data_input = []
+        val = get_data_dynamodb(device)  # dictionary
         if device == "pc1":
             url = self.pc1_model_url
             logging.info("URL Device: PC1")
-            self.get_data_consumer(topic=device)  # self.current_message contains current message consumed
-            val = get_data_dynamodb(device)
             for i, elt in enumerate(config.pc1_features):
                 for data in val:
-                    if data == elt:
+                    if data == elt[1]:
                         print(i, data, val[data])
                         data_input.append(float(val[data]))
 
         elif device == "pc2":
             url = self.pc2_model_url
             logging.info("URL Device: PC2")
-            self.get_data_consumer(topic=device)  # self.current_message contains current message consumed
-            val = get_data_dynamodb(device)
             for i, elt in enumerate(config.pc2_features):
                 for data in val:
-                    if data == elt:
+                    if data == elt[1]:
                         print(i, data, val[data])
                         data_input.append(float(val[data]))
 
         elif device == "raspberry":
             url = self.rasb_model_url
             logging.info("URL Device: RASPBERRY")
-            self.get_data_consumer(topic=device)  # self.current_message contains current message consumed
-            val = get_data_dynamodb(device)
             for i, elt in enumerate(config.rasb_features):
                 for data in val:
-                    if data == elt:
+                    if data == elt[1]:
                         print(i, data, val[data])
                         data_input.append(float(val[data]))
         else:
@@ -137,5 +136,10 @@ class Predict:
             prediction = model.predict([data_input + [0, 0]])
         else:
             prediction = model.predict([data_input])
+
+        # Update the item in DynamoDB with the prediction result
+        update_data_dynamodb(uuid=val['uuid'],
+                             device=device,
+                             prediction=prediction)
 
         return data, prediction

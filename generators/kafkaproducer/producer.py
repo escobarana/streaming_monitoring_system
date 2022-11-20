@@ -53,7 +53,7 @@ class KafkaProducer:
                                 'basic.auth.user.info': f"{os.environ['SCHEMA_USERNAME']}:{os.environ['SCHEMA_PASSWORD']}"
                                 }
         schema_registry_client = SchemaRegistryClient(schema_registry_conf)
-        if os.environ['TOPIC_NAME'] == 'PC':
+        if os.environ['TOPIC_NAME'] == 'pc1' or os.environ['TOPIC_NAME'] == 'pc2':
             self.json_serializer = JSONSerializer(schema_pc_str, schema_registry_client, sensor_to_dict)
         elif os.environ['TOPIC_NAME'] == 'raspberry':
             self.json_serializer = JSONSerializer(schema_rasp_str, schema_registry_client, sensor_to_dict)

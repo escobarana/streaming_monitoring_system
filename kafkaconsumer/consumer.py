@@ -2,11 +2,14 @@ import sys
 from confluent_kafka import Consumer, KafkaError, KafkaException, DeserializingConsumer
 from confluent_kafka.schema_registry.json_schema import JSONDeserializer
 from confluent_kafka.serialization import StringDeserializer
-from telegrambot.kafkaconsumer.pc import Pc
-from telegrambot.kafkaconsumer.raspberry import Raspberry
+from kafkaconsumer.pc import Pc
+from kafkaconsumer.raspberry import Raspberry
 import os
-from telegrambot.kafkaconsumer.schemas.pc_sensor_schema import schema as pc_schema
-from telegrambot.kafkaconsumer.schemas.raspberry_sensor_schema import schema as rasp_schema
+from kafkaconsumer.schemas.pc_sensor_schema import schema as pc_schema
+from kafkaconsumer.schemas.raspberry_sensor_schema import schema as rasp_schema
+from dynamodb import dynamodb
+import json
+from decimal import Decimal
 
 running = True
 
@@ -83,7 +86,7 @@ class KafkaConsumer:
                 'auto.offset.reset': 'earliest'  # read from the beginning of the topic
                 }
 
-        if os.environ['TOPIC_NAME'] == 'PC':
+        if os.environ['TOPIC_NAME'] == 'pc1' or os.environ['TOPIC_NAME'] == 'pc2':
             json_deserializer = JSONDeserializer(pc_schema, from_dict=dict_to_sensor_pc)
         else:
             json_deserializer = JSONDeserializer(rasp_schema, from_dict=dict_to_sensor_rasp)
@@ -133,15 +136,15 @@ class KafkaConsumer:
             # Close down consumer to commit final offsets.
             self.consumer.close()
 
-    def consume_json(self, topic_name: str):
+    def consume_json(self, topics: list):
         """
         Function to consume json documents from a kafkaproducer topic and print the information on screen
-        :param topic_name: Name of the topic
+        :param topics: List of topics
         :return:
         """
         # https://docs.confluent.io/platform/current/installation/configuration/consumer-configs.html
 
-        self.serializing_consumer.subscribe([topic_name])
+        self.serializing_consumer.subscribe(topics)
 
         while True:
             try:
@@ -151,11 +154,55 @@ class KafkaConsumer:
 
                 message = msg.value()
                 if message is not None:
+                    # Store the message in DynamoDb
                     print(f'[\n'
                           f'\tNew measure: \n'
                           f'\tuuid: {message.uuid}\n'
                           f'\tdevice: {message.device}\n'
-                          f'\tloading_datetime: {message.loading_datetime}\n')
+                          f'\tloading_datetime: {message.loading_datetime}\n]')
+
+                    item = {'uuid': message.uuid,
+                            'device': message.device,
+                            'loading_datetime': message.loading_datetime}
+
+                    if message.device == 'pc1':
+                        item = {'uuid': message.uuid,
+                                'device': message.device,
+                                'loading_datetime': message.loading_datetime,
+                                'ClockCPUCoreOne': message.ClockCPUCoreOne,
+                                'TemperatureCPUPackage': message.TemperatureCPUPackage,
+                                'LoadCPUTotal': message.LoadCPUTotal,
+                                'PowerCPUPackage': message.PowerCPUPackage,
+                                'TemperatureGPUCore': message.TemperatureGPUCore,
+                                'LoadGPUCore': message.LoadGPUCore}
+                    elif message.device == 'pc2':
+                        item = {'uuid': message.uuid,
+                                'device': message.device,
+                                'loading_datetime': message.loading_datetime,
+                                'ClockCPUCoreOne': message.ClockCPUCoreOne,
+                                'TemperatureCPUPackage': message.TemperatureCPUPackage,
+                                'LoadCPUTotal': message.LoadCPUTotal,
+                                'PowerCPUPackage': message.PowerCPUPackage}
+                    elif message.device == 'raspberry':
+                        item = {'uuid': message.uuid,
+                                'device': message.device,
+                                'loading_datetime': message.loading_datetime,
+                                'gpu_temp_celsius': message.gpu_temp_celsius,
+                                'cpu_temp_celsius': message.cpu_temp_celsius,
+                                'frequency_arm_hz': message.frequency_arm_hz,
+                                'frequency_core_hz': message.frequency_core_hz,
+                                'frequency_pwm_hz': message.frequency_pwm_hz,
+                                'voltage_core_v': message.voltage_core_v,
+                                'voltage_sdram_c_v': message.voltage_sdram_c_v,
+                                'voltage_sdram_i_v': message.voltage_sdram_i_v,
+                                'voltage_sdram_p_v': message.voltage_sdram_p_v,
+                                'memory_arm_bytes': message.memory_arm_bytes,
+                                'memory_gpu_bytes': message.memory_gpu_bytes,
+                                'throttled': message.throttled}
+                    else:
+                        print(f'device {message.device} does not exist')
+
+                    dynamodb.Table('sensors_data').put_item(Item=json.loads(json.dumps(item), parse_float=Decimal))
             except KeyboardInterrupt:
                 break
 
