@@ -75,8 +75,14 @@ def main():
         Main method of the file. Runs the bot with infinite polling
     :return: None
     """
+    initial_text = f"Hello User!\n" \
+                   f"Welcome to your Streaming Monitoring System\n" \
+                   f"Type one of these options to see the latest sensor's data of one of your devices:\n" \
+                   f"\t/pc1\n" \
+                   f"\t/pc2\n" \
+                   f"\t/raspberry\n"
     chat_id = os.environ["TELEGRAM_CHAT_ID"]
-    bot.send_message(chat_id=chat_id, text='The bot started!')
+    bot.send_message(chat_id=chat_id, text=initial_text)
     try:
         # Infinite loop
         bot.infinity_polling()

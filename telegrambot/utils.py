@@ -57,18 +57,18 @@ def get_data_dynamodb(device: str):
     return query_response["Items"][-1]
 
 
-def update_data_dynamodb(uuid: str, device: str, prediction: int):
-    """
-        This functions updates an item in the DynamoDB table adding the prediction for a given record
-    :param uuid: The uuid of the record
-    :param device: The device name ['raspberry', 'pc1', 'pc2']
-    :param prediction: The prediction made by the model for that item
-    :return:
-    """
-    dynamodb.Table('sensors_data').update_item(Key={'uuid': uuid, 'device': device},
-                                               UpdateExpression="set prediction=:pred",
-                                               ExpressionAttributeValues={':pred': prediction},
-                                               ReturnValues="UPDATED_NEW")
+# def update_data_dynamodb(uuid: str, device: str, prediction: int):
+#     """
+#         This functions updates an item in the DynamoDB table adding the prediction for a given record
+#     :param uuid: The uuid of the record
+#     :param device: The device name ['raspberry', 'pc1', 'pc2']
+#     :param prediction: The prediction made by the model for that item
+#     :return:
+#     """
+#     dynamodb.Table('sensors_data').update_item(Key={'uuid': uuid, 'device': device},
+#                                                UpdateExpression="set prediction=:pred",
+#                                                ExpressionAttributeValues={':pred': prediction},
+#                                                ReturnValues="UPDATED_NEW")
 
 
 class Predict:
@@ -140,8 +140,8 @@ class Predict:
             prediction = model.predict([data_input])
 
         # Update the item in DynamoDB with the prediction result
-        update_data_dynamodb(uuid=val['uuid'],
-                             device=device,
-                             prediction=int(prediction[0]))
+        # update_data_dynamodb(uuid=val['uuid'],
+        #                      device=device,
+        #                      prediction=int(prediction[0]))
 
         return data, prediction

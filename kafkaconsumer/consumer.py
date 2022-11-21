@@ -11,6 +11,7 @@ from dynamodb import dynamodb
 import json
 from predictor import Predict
 from decimal import Decimal
+import telebot
 
 running = True
 
@@ -207,6 +208,14 @@ class KafkaConsumer:
                     test = Predict()
                     data, prediction = test.predict_output(device=message.device, data=item)
                     item['prediction'] = int(prediction[0])  # set prediction to item
+
+                    # Trigger Telegram Alert
+                    if prediction:
+                        bot = telebot.TeleBot(os.environ['TELEGRAM_API_TOKEN'])
+                        chat_id = os.environ["TELEGRAM_CHAT_ID"]
+                        text = f'⚠⚠⚠ Your device {message.device} needs attention ⚠⚠⚠'
+                        bot.send_message(chat_id=chat_id, text=text)
+
                     # save item in DynamoDB
                     dynamodb.Table('sensors_data').put_item(Item=json.loads(json.dumps(item), parse_float=Decimal))
             except KeyboardInterrupt:
