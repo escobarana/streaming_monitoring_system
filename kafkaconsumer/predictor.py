@@ -1,7 +1,5 @@
 import config
 import requests
-from boto3.dynamodb.conditions import Attr
-from dynamodb import dynamodb
 import pickle
 import logging
 
@@ -44,7 +42,7 @@ class Predict:
             This function predicts the output value whether the device will need technical intervention or not based on
             the last produced record from the device
         :param device: device name
-        :param data: dictionary containing the sensor's data
+        :param data: dictionary containing the sensor's measurements data
         :return: last data record and prediction
         """
         url = ""

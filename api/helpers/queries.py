@@ -2,13 +2,13 @@ import json
 from decimal import Decimal
 from boto3.dynamodb.conditions import Attr
 from helpers.dynamodb import dynamodb
-from helpers import predictor
 
 
 class DecimalEncoder(json.JSONEncoder):
     """
         Class to encode decimal into JSON object
     """
+
     def default(self, obj):
         # If passed in object is instance of Decimal convert it to a string
         if isinstance(obj, Decimal):
@@ -42,6 +42,7 @@ def get_device_status(device: str) -> dict:
         This function returns the status in real-time of the device specified
     :return: message specifying the current status of the device
     """
-    data, prediction = predictor.Predict().predict_output(device)
-    msg = "No technical intervention required" if prediction[0] else "Technical intervention required"
+    prediction = dynamodb.Table('sensors_data').scan(FilterExpression=Attr("device").eq(device),
+                                                     IndexName="device-loading_datetime-index")['Items'][-1]['prediction']
+    msg = "The device is stressed" if prediction else "The device is OK"
     return {'msg': msg}

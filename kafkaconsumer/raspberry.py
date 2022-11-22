@@ -32,58 +32,114 @@ class Raspberry(object):
     # --- GETTERS [NO SETTERS - DATA CANNOT BE MODIFIED] ---#
     @property
     def uuid(self):
+        """
+            This property represent the UUID of the raspberry
+        :return: uuid value
+        """
         return self._uuid
 
     @property
     def device(self):
+        """
+            This property represents the device name
+        :return: device name
+        """
         return self._device
 
     @property
     def gpu_temp_celsius(self):
+        """
+            This property represent the measurement of GPU temperature of the device in ºC
+        :return: GPU temperature measurement
+        """
         return self._gpu_temp_celsius
 
     @property
     def cpu_temp_celsius(self):
+        """
+            This property represent the measurement of CPU temperature of the device in ºC
+        :return: CPU temperature measurement
+        """
         return self._cpu_temp_celsius
 
     @property
     def frequency_arm_hz(self):
+        """
+            This property represents the measurement of ARM frequency in Hz
+        :return: ARM frequency measurement
+        """
         return self._frequency_arm_hz
 
     @property
     def frequency_core_hz(self):
+        """
+            This property represents the measurement of Core frequency in Hz
+        :return: Core frequency measurement
+        """
         return self._frequency_core_hz
 
     @property
     def frequency_pwm_hz(self):
+        """
+            This property represents the measurement of Power frequency in Hz
+        :return: Power frequency measurement
+        """
         return self._frequency_pwm_hz
 
     @property
     def voltage_core_v(self):
+        """
+            This property represents the measurement of Core Voltage in Volts
+        :return: Core Voltage measurement
+        """
         return self._voltage_core_v
 
     @property
     def voltage_sdram_c_v(self):
+        """
+            This property represents the measurement of SDRAM C V Voltage in Volts
+        :return: SDRAM C V Voltage measurement
+        """
         return self._voltage_sdram_c_v
 
     @property
     def voltage_sdram_i_v(self):
+        """
+            This property represents the measurement of SDRAM I V Voltage in Volts
+        :return: SDRAM I V Voltage measurement
+        """
         return self._voltage_sdram_i_v
 
     @property
     def voltage_sdram_p_v(self):
+        """
+            This property represents the measurement of SDRAM P V Voltage in Volts
+        :return: SDRAM P V Voltage measurement
+        """
         return self._voltage_sdram_p_v
 
     @property
     def memory_arm_bytes(self):
+        """
+            This property represents the measurement of ARM Bytes memory
+        :return: ARM Bytes memory measurement
+        """
         return self._memory_arm_bytes
 
     @property
     def memory_gpu_bytes(self):
+        """
+            This property represents the measurement of GPU Bytes memory
+        :return: GPU Bytes memory measurement
+        """
         return self._memory_gpu_bytes
 
     @property
     def throttled(self):
+        """
+            This property represents the measurement of throttling
+        :return: throttling measurement
+        """
         return self._throttled
 
     @property

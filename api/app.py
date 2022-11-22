@@ -22,37 +22,41 @@ ns = api.namespace('devices', description='operations')
 pc1 = api.model('PC1', {
     'uuid': fields.String(required=True, description="Universal Unique Identifier"),
     'device': fields.String(required=True, description="The name of the device (pc1)."),
-    'ClockCPUCoreOne': fields.String(required=True, description="Clock CPU in Core 1."),
+    'ClockCPUCoreOne': fields.Float(required=True, description="Clock CPU in Core 1."),
     'TemperatureCPUPackage': fields.String(required=True, description="CPU Package Temperature in ºC."),
-    'LoadCPUTotal': fields.String(required=True, description="Total Load of the CPU."),
-    'PowerCPUPackage': fields.String(required=True, description="Power of the CPU package."),
-    'TemperatureGPUCore': fields.String(required=True, description="GPU Core Temperature in ºC."),
-    'LoadGPUCore': fields.String(required=True, description="Load GPU Core.")
+    'LoadCPUTotal': fields.Float(required=True, description="Total Load of the CPU."),
+    'PowerCPUPackage': fields.Float(required=True, description="Power of the CPU package."),
+    'TemperatureGPUCore': fields.Integer(required=True, description="GPU Core Temperature in ºC."),
+    'LoadGPUCore': fields.Float(required=True, description="Load GPU Core."),
+    'prediction': fields.Integer(required=True, description="Prediction of status using ML models.")
 })
 
 pc2 = api.model('PC2', {
     'uuid': fields.String(required=True, description="Universal Unique Identifier"),
     'device': fields.String(required=True, description="The name of the device (pc2)."),
-    'ClockCPUCoreOne': fields.String(required=True, description="Clock CPU in Core 1."),
+    'ClockCPUCoreOne': fields.Float(required=True, description="Clock CPU in Core 1."),
     'TemperatureCPUPackage': fields.String(required=True, description="CPU Package Temperature in ºC."),
-    'LoadCPUTotal': fields.String(required=True, description="Total Load of the CPU."),
-    'PowerCPUPackage': fields.String(required=True, description="Power of the CPU package.")})
+    'LoadCPUTotal': fields.Float(required=True, description="Total Load of the CPU."),
+    'PowerCPUPackage': fields.Float(required=True, description="Power of the CPU package."),
+    'prediction': fields.Integer(required=True, description="Prediction of status using ML models.")
+})
 
 rasp = api.model('Raspberry', {
     'uuid': fields.String(required=True, description="Universal Unique Identifier"),
     'device': fields.String(required=True, description="The name of the device (raspberry)."),
-    'GPU_temp_celsius': fields.String(required=True, description="Temperature of GPU in ºC."),
-    'CPU_temp_celsius': fields.String(required=True, description="Temperature CPU in ºC."),
-    'frequency_arm_hz': fields.String(required=True, description="ARM frequency in Hz."),
-    'frequency_core_hz': fields.String(required=True, description="Core frequency in Hz."),
-    'frequency_pwm_hz': fields.String(required=True, description="Power frequency in Hz."),
-    'voltage_core_v': fields.String(required=True, description="Core Voltage V."),
-    'voltage_sdram_c_v': fields.String(required=True, description="SDRAM Voltage C V."),
-    'voltage_sdram_i_v': fields.String(required=True, description="SDRAM Voltage I V."),
-    'voltage_sdram_p_v': fields.String(required=True, description="SDRAM Voltage P V."),
-    'memory_arm_bytes': fields.String(required=True, description="Memory ARM in Bytes."),
-    'memory_gpu_bytes': fields.String(required=True, description="Memory GPU in Bytes."),
-    'throttled': fields.String(required=True, description="Indicates whether the Raspberry Pi is stressed.")
+    'GPU_temp_celsius': fields.Float(required=True, description="Temperature of GPU in ºC."),
+    'CPU_temp_celsius': fields.Float(required=True, description="Temperature CPU in ºC."),
+    'frequency_arm_hz': fields.Integer(required=True, description="ARM frequency in Hz."),
+    'frequency_core_hz': fields.Integer(required=True, description="Core frequency in Hz."),
+    'frequency_pwm_hz': fields.Integer(required=True, description="Power frequency in Hz."),
+    'voltage_core_v': fields.Float(required=True, description="Core Voltage V."),
+    'voltage_sdram_c_v': fields.Float(required=True, description="SDRAM Voltage C V."),
+    'voltage_sdram_i_v': fields.Float(required=True, description="SDRAM Voltage I V."),
+    'voltage_sdram_p_v': fields.Float(required=True, description="SDRAM Voltage P V."),
+    'memory_arm_bytes': fields.Integer(required=True, description="Memory ARM in Bytes."),
+    'memory_gpu_bytes': fields.Integer(required=True, description="Memory GPU in Bytes."),
+    'throttled': fields.String(required=True, description="Indicates whether the Raspberry Pi is stressed."),
+    'prediction': fields.Integer(required=True, description="Prediction of status using ML models.")
 })
 
 

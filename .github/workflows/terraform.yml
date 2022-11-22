@@ -1,17 +1,17 @@
 name: 'CD Terraform'
 on:
-  push:
-    branches:
-      - '*'
-  pull_request:
-    branches: [ main ]
+#  push:
+#    branches:
+#      - '*'
+#  pull_request:
+#    branches: [ main ]
 
 # When this workflow is in main or default branch, can use the 'workflow_run' to create dependency
-#  workflow_run:  # Dependency between workflows
-#    workflows: ["Build and push Docker image to Docker Hub"]
-#    types: [completed]
-#    branches:
-#      - 'main'
+  workflow_run:  # Dependency between workflows
+    workflows: ["Build and push Docker image to Docker Hub - Flask"]
+    types: [completed]
+    branches:
+      - 'main'
 
 jobs:
   cd_apply_terraform:

@@ -1,20 +1,25 @@
-# Data Simulator
+# Streaming Monitoring System
 
 Web application (Flask based) using Swagger for documentation purposes.
 
 Three kafka producers (two PCs and one Raspberry Pi) that will send sensor's data every 5 seconds to three different Kafka 
 topics. A consumer will subscribe to this three topics, monitoring the messages by predicting in real-time the device status
-and alerting the final user if one of his devices is burning out based on the prediction of the machine learning model.
-The sensor's data and the predictions will be stored in AWS DynamoDB, accessible by the user whenever he requests through 
-a bot implemented using `Telegram`. This bot serves both use cases, `alerting` and `monitoring`.
+and alerting the final user if one of his devices is soon to be stressed (so the user can act accordingly) based on the 
+prediction of the machine learning models.
+The sensor's measurements data and the predictions will be stored in `AWS DynamoDB`, accessible by the user whenever he 
+requests through a bot implemented using `Telegram`. This bot serves both use cases, `alerting` and `monitoring`.
 
 The machine learning models that predicts the status of each device are deployed in AWS S3 bucket.
+
+Architecture of the system:
+
+![Architecture of the Streaming Monitoring System](image/architecture.png "Architecture")
 
 
 ## Structure of the project
 
     ├── .github                     : CI/CD pipeline using GitHub Actions
-    |  └── workflows                : Contains yaml files that trigger the workflows in GitHub Actions.
+    |  └── workflows                : Contains yml files that trigger the workflows in GitHub Actions.
     |       ├── docker_flask.yml 
     |       ├── docker_telegram.yml 
     |       ├── terraform.yml 
@@ -68,7 +73,7 @@ The machine learning models that predicts the status of each device are deployed
     |   ├── model_raspberry.py
     |   ├── model_training.py
     |   ├── README.md
-    ├── telegrambot                  : Telegram Bot
+    ├── telegrambot                  : Telegram Bot for alerting and monitoring
     |   ├── .dockerignore
     |   ├── __init__.py
     |   ├── config.py
@@ -87,6 +92,33 @@ The machine learning models that predicts the status of each device are deployed
 
 **Refer to each section `README.md` file for further details.**
 
+All folders contain its own `README.md` file with further explanations except `.github` folder which is the one 
+containing the CI/CD pipeline workflows triggered by GitHub Actions on every push to any branch or pull request (PR) to 
+the main branch. There are three different workflows configured, using GitHub secrets for security reasons when pushing 
+the code, that will be triggered one after the other:
+
+
+### unittests.yml
+
+First workflow triggered. It executes the tests defined for the main application in `api > tests`.
+
+### docker_flask.yml
+
+If the first workflow (`unittests.yml`) is successful, this workflow is triggered. It builds and pushes the docker 
+image of the main application to the Docker Hub Registry.
+
+### docker_telegram.yml
+
+This workflow is triggered at the same time `unittests.yml` workflow since they're independent. It builds and pushes the docker 
+image of the telegram bot application to the Docker Hub Registry.
+
+### terraform.yml
+
+If the docker_flask workflow (`docker_flask.yml`) is successful, this workflow is triggered. It deploys on AWS the 
+main application using terraform. It saves the state of the application everytime terraform is applied and redeployed, 
+so it only redeploys the changes, if any. This makes the deployment faster.
+
+
 ## Table reference of the sensors' measure values
 
 | Sensor Type | Measure                       |
@@ -96,14 +128,7 @@ The machine learning models that predicts the status of each device are deployed
 | Load        | `% (percentage)`              |
 | Voltage     | `V (Volt)`                    | 
 | Fan         | `CFM (Cubic Feet per Minute)` | 
-| Clock       | `GHz (GigaHertz)`             | 
-
-
-## Sensor Schema (JSON) - Schema Registry
-
-The sensor schema can be found in `generators > kafkaproducer > raspberry_sensor_schema.py and pc_sensor_schema.py`. 
-These schemas will ensure that every sensor record sent to the kafka topic will have this structure having always 
-properly formatted messages.
+| Clock       | `GHz (GigaHertz)`             |
 
 
 ## Environmental Variables
@@ -125,78 +150,3 @@ properly formatted messages.
 | `TF_CLOUD_TOKEN`        | Terraform Cloud Token to automate the deployment in AWS                     |
 | `DEVICE`                | Device from where you are running the application ['RASPBERRY', 'PC']       |
 
-
-## Run Flask API using Docker
-
-Download image:
-
-```shell
-  cd api
-``` 
-```shell
-  docker pull -t escobarana/sensorsapi:latest
-```
-
-Run image:
-
-```shell
-  docker run -p 5000:5000 -t -i escobarana/sensorsapi:latest --env-file .env
-```
-
-
-## Run Flask API locally
-
-OpenHardwareMonitor software must be running before launching the instance. 
-*https://openhardwaremonitor.org/*
-
-Install prerequisites (if the `requirements.txt` installation fails see *Notes for further details):
-
-```shell
-  pip install -r requirements.txt
-```
-Run tests
-```shell
-  cd api
-```
-```shell
-  python -m unittest tests/__init__.py
-```
-
-Run Flask REST API
-```shell
-  cd api
-```
-```shell
-  python app.py
-```
-
-
-## *Notes
-
-The `WMI` library only works in Windows OS, if you're running the code in any other OS use the `Raspberry Pi` 
-configuration, comment this library in the `requirements.txt` file.
-
-
-When working with an OS different than Windows (with `aarch64`), to install `confluent-kafka` library you might 
-encounter some incompatibility errors since they do not provide prebuilt binary wheels for `aarch64`. You will need to 
-compile it yourself, which requires to first build and install `librdkafka` from source. Follow this steps:
-
-```shell
-    sudo apt-get install -y libssl-dev zlib1g-dev gcc g++ make
-    git clone https://github.com/edenhill/librdkafka
-    cd librdkafka
-    ./configure --prefix=/usr
-    make
-    pip install confluent-kafka
-```
-
-If after this installation you try to run the code and get the following error: `Undefined Symbol: rd_kafka_producev` 
-it is most likely because you have an earlier version installed in `/usr` and the newest version you just installed is
-located in `/usr/local` and it will not be picked up automatically. 
-You can check it by running `sudo apt-get purge librdkafka1 librdkafka-dev`.
-
-To solve this issue you have to remove the previous versions from the deb package:
-
-```shell
-  sudo apt-get purge librdkafka1 librdkafka-dev
-```

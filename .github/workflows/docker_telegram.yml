@@ -1,17 +1,10 @@
-name: Build and push Docker image to Docker Hub
+name: Build and push Docker image to Docker Hub - Telegram
 on:
   push:
     branches:
       - '*'
   pull_request:
     branches: [ main ]
-
-# When this workflow is in main or default branch, can use the 'workflow_run'
-#  workflow_run:  # Dependency between workflows
-#    workflows: ["CI Python"]
-#    types: [completed]
-#    branches:
-#      - '*'
 
 env:
   TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
