@@ -2,11 +2,11 @@ import sys
 from confluent_kafka import Consumer, KafkaError, KafkaException, DeserializingConsumer
 from confluent_kafka.schema_registry.json_schema import JSONDeserializer
 from confluent_kafka.serialization import StringDeserializer
-from kafkaconsumer.pc import Pc
-from kafkaconsumer.raspberry import Raspberry
+from pc import Pc
+from raspberry import Raspberry
 import os
-from kafkaconsumer.schemas.pc_sensor_schema import schema as pc_schema
-from kafkaconsumer.schemas.raspberry_sensor_schema import schema as rasp_schema
+from schemas.pc_sensor_schema import schema as pc_schema
+from schemas.raspberry_sensor_schema import schema as rasp_schema
 from dynamodb import dynamodb
 import json
 from predictor import Predict

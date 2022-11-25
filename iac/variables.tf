@@ -79,7 +79,7 @@ variable "maximum_capacity" {
 variable "instance_type" {
   description = "EC2 instance type for ECS launch configuration."
   type        = string
-  default     = "t3.nano"
+  default     = "t2.micro"
 }
 
 # This variables defines the ECS service name.

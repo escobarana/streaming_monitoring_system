@@ -40,7 +40,7 @@ Architecture of the system:
     |   ├── __init__.py
     |   ├── pc.py
     |   ├── raspberry.py
-    |   ├── README.md
+    |   └── README.md
     ├── iac                         : Infrastructure as Code 
     |   ├── .terraform
     |   ├── .gitignore
@@ -50,7 +50,7 @@ Architecture of the system:
     |   ├── outputs.tf
     |   ├── terraform.tfstate
     |   ├── terraform.tfstate.backup
-    |   └── variables.tf 
+    |   ├── variables.tf 
     |   └── README.md               : Further explanations on IaC part
     ├── kafkaconsumer               : Kafka Consumer
     |   ├── schemas
@@ -62,7 +62,7 @@ Architecture of the system:
     |   ├── pc.py
     |   ├── predictor.py
     |   ├── raspberry.py
-    |   ├── README.md
+    |   └── README.md
     ├── model                        : ML Modeling
     |   ├── data
     |   ├── exported_models
@@ -72,7 +72,7 @@ Architecture of the system:
     |   ├── model_pc1.py
     |   ├── model_raspberry.py
     |   ├── model_training.py
-    |   ├── README.md
+    |   └── README.md
     ├── telegrambot                  : Telegram Bot for alerting and monitoring
     |   ├── .dockerignore
     |   ├── __init__.py
@@ -82,7 +82,7 @@ Architecture of the system:
     |   ├── main_telegram.py
     |   ├── requirements.txt
     |   ├── utils.py
-    |   ├── README.md
+    |   └── README.md
     ├── image                       : Folder containing all the images used in the README.md files.
     ├── .env                        : File to store environment variables (not published)
     ├── .gitignore
@@ -141,12 +141,11 @@ so it only redeploys the changes, if any. This makes the deployment faster.
 | `KAFKA_SCHEMA_ENDPOINT` | Confluent Cloud Schema Registry Endpoint                                    |
 | `SCHEMA_USERNAME`       | Confluent Cloud Schema Registry Key                                         |
 | `SCHEMA_PASSWORD`       | Confluent Cloud Schema Registry API Secret                                  |
-| `TOPIC_NAME_IOT`        | Topic name to produce records from the Raspberry Pi to Kafka                |
 | `TOPIC_NAME`            | Topic name to produce records to Kafka                                      |
 | `AWS_ACCESS_KEY`        | AWS Access Key to deploy the Flask REST API to                              |
 | `AWS_SECRET_ACCESS_KEY` | AWS Secret Access Key to deploy the Flask REST API to                       |
 | `DOCKER_HUB_USERNAME`   | Docker Hub registry username (to build and publish docker image of the app) |
 | `DOCKER_HUB_TOKEN`      | Docker Hub registry Token (to build and publish docker image of the app)    |
 | `TF_CLOUD_TOKEN`        | Terraform Cloud Token to automate the deployment in AWS                     |
-| `DEVICE`                | Device from where you are running the application ['RASPBERRY', 'PC']       |
+| `DEVICE`                | Device from where you are running the application [`RASPBERRY`, `PC`]       |
 

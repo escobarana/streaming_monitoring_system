@@ -45,3 +45,9 @@ jobs:
           context: ./telegrambot
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/telegrambot:latest
+        env:
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_API_TOKEN: ${{ secrets.TELEGRAM_API_TOKEN }}
+          AWS_REGION_NAME: ${{ secrets.AWS_REGION_NAME }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
