@@ -20,8 +20,6 @@ Y
 iac/README.md,4\3\43010aaa49d339a7c6b9046e3756a9e40f386a57
 I
 api/tests/restapi_test.py,4\1\41cf7eda9ce3cb53a61e0c00c247c1b449019f47
-F
-api/helpers/queries.py,4\7\472e29fd28911d67a58352d320ff19ceaf17e2e7
 D
 telegrambot/utils.py,d\4\d4dad4478e3ef501d8770ba26bb1c4ad9a13a12d
 G
@@ -62,8 +60,3 @@ O
 .github/workflows/unittests.yml,d\e\de4ef454aa1ef5831fd9d67f9d56273574490ab0
 E
 telegrambot/README.md,c\c\cc1d7e2f5235433b387d2c89742348ca34a43281
-:
-
-api/app.py,2\b\2b829e25c7d72bb6b04ca84f1764732278d2c9cf
-G
-api/helpers/dynamodb.py,5\c\5cca690b7a0a3f288c1c10cf44c2566b34cf6aa4
