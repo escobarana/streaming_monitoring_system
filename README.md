@@ -15,6 +15,9 @@ Architecture of the system:
 
 ![Architecture of the Streaming Monitoring System](image/architecture.png "Architecture")
 
+Deployment architecture of the Flask REST API:
+
+![Deployment architecture of the Streaming Monitoring System](image/deployment.png "Deployment")
 
 ## Structure of the project
 
@@ -54,15 +57,18 @@ Architecture of the system:
     |   └── README.md               : Further explanations on IaC part
     ├── kafkaconsumer               : Kafka Consumer
     |   ├── schemas
+    |   ├── .dockerignore
     |   ├── __init__.py
     |   ├── config.py
     |   ├── consumer.py
+    |   ├── Dockerfile
     |   ├── dynamodb.py
     |   ├── main.py
     |   ├── pc.py
     |   ├── predictor.py
     |   ├── raspberry.py
-    |   └── README.md
+    |   ├── README.md
+    |   └── requirements.txt
     ├── model                        : ML Modeling
     |   ├── data
     |   ├── exported_models

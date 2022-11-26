@@ -12,6 +12,10 @@ This Flask application is `Dockerized` and deployed in `AWS ECS` using also an `
 to be available everywhere. Have a look at `iac` folder `README.md` file for further information about the deployment 
 of the web using `Terraform`.
 
+**Deployment architecture:**
+
+![Deployment architecture of the Streaming Monitoring System](../image/deployment.png "Deployment")
+
 
 ## Table reference of the sensors' measure values
 

@@ -28,5 +28,10 @@ Balancer DNS name. This is the public URL to access the Web Application in any b
 This whole process is now automatize using GitHub Actions. See the workflow in `.github > workflows > cd_terraform.yaml`
 file. It is triggered in every push/pull request and the deployment and .tfstate updated accordingly.
 
+**Deployment architecture:**
+
+![Deployment architecture of the Streaming Monitoring System](../image/deployment.png "Deployment")
+
+
 #### Useful links:
 https://aws.amazon.com/es/blogs/opensource/deploying-python-flask-microservices-to-aws-using-open-source-tools/

@@ -48,7 +48,7 @@ jobs:
         with:
           context: ./api
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/sensorsapi:latest
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/sensorsapi:demo
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
