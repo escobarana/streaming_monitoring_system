@@ -70,14 +70,12 @@ Deployment architecture of the Flask REST API:
     |   ├── README.md
     |   └── requirements.txt
     ├── model                        : ML Modeling
-    |   ├── data
     |   ├── exported_models
+    |   ├── training_data
     |   ├── __init__.py
     |   ├── config.py
     |   ├── data_retriever.py
-    |   ├── model_pc1.py
-    |   ├── model_raspberry.py
-    |   ├── model_training.py
+    |   ├── model.py
     |   └── README.md
     ├── telegrambot                  : Telegram Bot for alerting and monitoring
     |   ├── .dockerignore

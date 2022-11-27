@@ -14,6 +14,7 @@ from decimal import Decimal
 import telebot
 
 running = True
+STRESSED_THRESHOLD = 0  # what is the threshold to be considered stressed
 
 
 def dict_to_sensor_pc(obj, ctx):
@@ -58,8 +59,8 @@ def dict_to_sensor_rasp(obj, ctx):
     return Raspberry(uuid=obj['uuid'],
                      device=obj['device'],
                      loading_datetime=obj['loading_datetime'],
-                     gpu_temp_celsius=obj['gpu_temp_celsius'],
-                     cpu_temp_celsius=obj['cpu_temp_celsius'],
+                     GPU_temp_celsius=obj['GPU_temp_celsius'],
+                     CPU_temp_celsius=obj['CPU_temp_celsius'],
                      frequency_arm_hz=obj['frequency_arm_hz'],
                      frequency_core_hz=obj['frequency_core_hz'],
                      frequency_pwm_hz=obj['frequency_pwm_hz'],
@@ -189,8 +190,8 @@ class KafkaConsumer:
                         item = {'uuid': message.uuid,
                                 'device': message.device,
                                 'loading_datetime': message.loading_datetime,
-                                'gpu_temp_celsius': message.gpu_temp_celsius,
-                                'cpu_temp_celsius': message.cpu_temp_celsius,
+                                'GPU_temp_celsius': message.GPU_temp_celsius,
+                                'CPU_temp_celsius': message.CPU_temp_celsius,
                                 'frequency_arm_hz': message.frequency_arm_hz,
                                 'frequency_core_hz': message.frequency_core_hz,
                                 'frequency_pwm_hz': message.frequency_pwm_hz,
@@ -205,18 +206,28 @@ class KafkaConsumer:
                         print(f'device {message.device} does not exist')
 
                     # make prediction to item
+                    prediction_ = 0
                     test = Predict()
                     data, prediction = test.predict_output(device=message.device, data=item)
-                    item['prediction'] = int(prediction[0])  # set prediction to item
+                    if message.device == 'raspberry':
+                        if float(prediction[0][1]) <= STRESSED_THRESHOLD:
+                            prediction_ = 1  # Not stressed
+                    else:
+                        if float(prediction[0][1]) > STRESSED_THRESHOLD:
+                            prediction_ = 1  # Stressed
 
                     # Trigger Telegram Alert
-                    if prediction:
+                    if prediction_:
                         bot = telebot.TeleBot(os.environ['TELEGRAM_API_TOKEN'])
                         chat_id = os.environ["TELEGRAM_CHAT_ID"]
-                        text = f'⚠⚠⚠ Your device {message.device} needs attention ⚠⚠⚠'
+                        text = f'{message.device} {message.uuid}\n ----- \n' \
+                               f'⚠️⚠️⚠️ Your device {message.device} with uuid {message.uuid} needs attention. ⚠️⚠️⚠️\n ' \
+                               f'📊 Likelihood of prediction: {((1 - float(prediction[0][1]))*100.0)} % \n' \
+                               f'Is this correct? Reply with Y/N '
                         bot.send_message(chat_id=chat_id, text=text)
 
                     # save item in DynamoDB
+                    item['prediction'] = prediction_  # set prediction to item
                     dynamodb.Table('sensors_data').put_item(Item=json.loads(json.dumps(item), parse_float=Decimal))
             except KeyboardInterrupt:
                 break

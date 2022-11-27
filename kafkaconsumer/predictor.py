@@ -85,8 +85,8 @@ class Predict:
 
         # Make prediction based on the deployed model
         if device == 'pc2':
-            prediction = model.predict([data_input + [0, 0]])
+            prediction = model.predict_proba([data_input + [0, 0]])
         else:
-            prediction = model.predict([data_input])
+            prediction = model.predict_proba([data_input])
 
         return data, prediction

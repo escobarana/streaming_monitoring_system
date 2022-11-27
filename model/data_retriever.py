@@ -1,26 +1,38 @@
-import config
 import pandas as pd
+from boto3.dynamodb.conditions import Attr
+import boto3
+import os
+
+dynamodb = boto3.resource(
+    'dynamodb',
+    region_name="us-east-1",
+    aws_access_key_id=os.environ["AWS_ACCESS_KEY_ID"],
+    aws_secret_access_key=os.environ["AWS_SECRET_ACCESS_KEY"]
+)
 
 
-class Data:
+def get_data_dynamodb(device: str):
+    """
+        This function returns all documents on dynamodb from the given device based on an index
+    :param device: The device name to filter the query by ['raspberry', 'pc1', 'pc2']
+    :return: last element from the executed query, which is the last element loaded produced by the device
+        """
+    query_response = dynamodb.Table('sensors_data').scan(FilterExpression=Attr("device").eq(device),
+                                                         IndexName="device-loading_datetime-index")
+    return query_response["Items"]
 
-    def __init__(self, environment="local"):
-        self.environment = environment
-        self.local_data_path = config.local_data_path
 
-    # retrieve data from data base
-    def get_data_from_kafka(self):
-        pass
+def save_into_csv(dictionary_source: dict, device_name: str):
+    """
+        Save the csv data into a csv file
+    :param dictionary_source: dict of data produced by dynamodb
+    :param device_name: name of device in reference
 
-    # add the data where the "needs intervention is 1"
-    def augment_data(self):
-        pass
+    """
+    pd.DataFrame(dictionary_source).to_csv(device_name + '.csv')
 
-    # get data from local csv
-    def get_local_data(self):
-        try:
-            data_frame = pd.read_csv(config.local_data_path)
-            return data_frame
-        except Exception as error:
-            print('Error wile reading local data ' + str(error))
-            return False
+
+if __name__ == '__main__':
+    save_into_csv(get_data_dynamodb('pc1'), 'training_data/pc1')
+    save_into_csv(get_data_dynamodb('pc2'), 'training_data/pc2')
+    save_into_csv(get_data_dynamodb('raspberry'), 'training_data/raspberry')

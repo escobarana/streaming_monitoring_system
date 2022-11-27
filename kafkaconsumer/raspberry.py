@@ -6,7 +6,7 @@ class Raspberry(object):
         This class defines a Raspberry Pi object with its attributes in order to monitor its health
     """
 
-    def __init__(self, uuid, device, loading_datetime, gpu_temp_celsius, cpu_temp_celsius, frequency_arm_hz,
+    def __init__(self, uuid, device, loading_datetime, GPU_temp_celsius, CPU_temp_celsius, frequency_arm_hz,
                  frequency_core_hz, frequency_pwm_hz, voltage_core_v, voltage_sdram_c_v, voltage_sdram_i_v,
                  voltage_sdram_p_v, memory_arm_bytes, memory_gpu_bytes, throttled):
         """
@@ -16,8 +16,8 @@ class Raspberry(object):
         self._uuid = uuid
         self._device = device
         self.loading_datetime = loading_datetime
-        self._gpu_temp_celsius = gpu_temp_celsius
-        self._cpu_temp_celsius = cpu_temp_celsius
+        self._GPU_temp_celsius = GPU_temp_celsius
+        self._CPU_temp_celsius = CPU_temp_celsius
         self._frequency_arm_hz = frequency_arm_hz
         self._frequency_core_hz = frequency_core_hz
         self._frequency_pwm_hz = frequency_pwm_hz
@@ -47,20 +47,20 @@ class Raspberry(object):
         return self._device
 
     @property
-    def gpu_temp_celsius(self):
+    def GPU_temp_celsius(self):
         """
             This property represent the measurement of GPU temperature of the device in ºC
         :return: GPU temperature measurement
         """
-        return self._gpu_temp_celsius
+        return self._GPU_temp_celsius
 
     @property
-    def cpu_temp_celsius(self):
+    def CPU_temp_celsius(self):
         """
             This property represent the measurement of CPU temperature of the device in ºC
         :return: CPU temperature measurement
         """
-        return self._cpu_temp_celsius
+        return self._CPU_temp_celsius
 
     @property
     def frequency_arm_hz(self):
@@ -152,8 +152,8 @@ class Raspberry(object):
             "uuid": self.uuid,
             "device": self.device,
             "loading_datetime": datetime.today().strftime('%Y-%m-%d@%H:%M:%S'),
-            "GPU_temp_celsius": self.gpu_temp_celsius,
-            "CPU_temp_celsius": self.cpu_temp_celsius,
+            "GPU_temp_celsius": self.GPU_temp_celsius,
+            "CPU_temp_celsius": self.CPU_temp_celsius,
             "frequency_arm_hz": self.frequency_arm_hz,
             "frequency_core_hz": self.frequency_core_hz,
             "frequency_pwm_hz": self.frequency_pwm_hz,
