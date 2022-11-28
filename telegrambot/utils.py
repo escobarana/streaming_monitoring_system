@@ -1,6 +1,6 @@
 import prettytable as pt
 from boto3.dynamodb.conditions import Attr
-from telegrambot.dynamodb_config import dynamodb
+from dynamodb_config import dynamodb
 import logging
 
 logging.basicConfig()

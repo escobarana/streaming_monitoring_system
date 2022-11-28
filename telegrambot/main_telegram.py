@@ -1,4 +1,3 @@
-import os
 import config
 import utils
 import telebot
@@ -103,8 +102,8 @@ def main():
         Main method of the file. Runs the bot with infinite polling
     :return: None
     """
-    initial_text = f"Hello User!\n" \
-                   f"Welcome to your Streaming Monitoring System\n" \
+    initial_text = f"👋 Hello User!\n" \
+                   f"Welcome to your Streaming Monitoring System!\n" \
                    f"Type one of these options to see the latest sensor's data of one of your devices:\n" \
                    f"\t/pc1\n" \
                    f"\t/pc2\n" \
