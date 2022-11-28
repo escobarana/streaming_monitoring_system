@@ -2,6 +2,7 @@ import config
 import utils
 import telebot
 import time
+import os
 
 bot = telebot.TeleBot(os.environ['TELEGRAM_API_TOKEN'])
 
