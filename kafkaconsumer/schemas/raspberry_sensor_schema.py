@@ -12,19 +12,19 @@ schema = """
       "type": "string"
     },
     "GPU_temp_celsius": {
-      "description": "",
+      "description": "GPU temperature value",
       "type": "number"
     },
     "CPU_temp_celsius": {
-      "description": "",
+      "description": "CPU temperature value",
       "type": "number"
     },
     "frequency_arm_hz": {
-      "description": "",
+      "description": "Frequency value of ARM",
       "type": "number"
     },
     "frequency_core_hz": {
-      "description": "",
+      "description": "Frequency value of core",
       "type": "number"
     },
     "frequency_pwm_hz": {
@@ -32,35 +32,35 @@ schema = """
       "type": "number"
     },
     "voltage_core_v": {
-      "description": "",
+      "description": "Voltage value of core",
       "type": "number"
     },
     "voltage_sdram_c_v": {
-      "description": "",
+      "description": "Voltage value of SDRAM cv",
       "type": "number"
     },
     "voltage_sdram_i_v": {
-      "description": "",
+      "description": "Voltage value of SDRAM iv",
       "type": "number"
     },
     "voltage_sdram_p_v": {
-      "description": "",
+      "description": "Voltage value of SDRAM pv",
       "type": "number"
     },
     "memory_arm_bytes": {
-      "description": "",
+      "description": "ARM memory value",
       "type": "number"
     },
     "memory_gpu_bytes": {
-      "description": "",
+      "description": "GPU memory value",
       "type": "number"
     },
     "throttled": {
-      "description": "",
+      "description": "Throttled value",
       "type": "string"
     },
     "loading_datetime": {
-      "description": "",
+      "description": "Datetime value of the produced message",
       "type": "string"
     }
   },
