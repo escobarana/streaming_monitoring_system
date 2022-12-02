@@ -12,11 +12,22 @@ pip install -r requirements.txt
 
 ### Execute
 
+````shell
+cd model
+````
+
 Save `.csv` files
 
 ````shell
 python data_retriever.py
 ````
+
+Since versioning is enabled on the S3 bucket objects, we can update the versions by executing:
+
+````shell
+python model.py
+````
+
 
 ##  🏋️‍♂️ Model Training
 
@@ -65,3 +76,9 @@ The result of prediction is sent to the user via telegram alert
 - `Pandas`
 - `Sickit-learn`
 - `Pickle`
+
+
+Test of the alerting message sent by the Telegram Bot after making the prediction with the model, and correcting the 
+prediction by the user so the model keeps learning:
+
+![Alert message PC1 + correction of prediction](../image/pc1_alert_with_correction.png "Alert PC1")

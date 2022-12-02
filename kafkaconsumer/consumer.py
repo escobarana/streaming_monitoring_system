@@ -14,7 +14,7 @@ from decimal import Decimal
 import telebot
 
 running = True
-STRESSED_THRESHOLD = 0  # what is the threshold to be considered stressed
+STRESSED_THRESHOLD = 0.7  # what is the threshold to be considered stressed
 
 
 def dict_to_sensor_pc(obj, ctx):
@@ -221,7 +221,7 @@ class KafkaConsumer:
                         bot = telebot.TeleBot(os.environ['TELEGRAM_API_TOKEN'])
                         chat_id = os.environ["TELEGRAM_CHAT_ID"]
                         text = f'{message.device} {message.uuid}\n ----- \n' \
-                               f'⚠️⚠️⚠️ Your device {message.device} with uuid {message.uuid} needs attention. ⚠️⚠️⚠️\n ' \
+                               f'⚠️⚠️⚠️ Your device {message.device} needs attention. ⚠️⚠️⚠️\n ' \
                                f'📊 Likelihood of prediction: {((1 - float(prediction[0][1]))*100.0)} % \n' \
                                f'Is this correct? Reply with Y/N '
                         bot.send_message(chat_id=chat_id, text=text)

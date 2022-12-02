@@ -20,3 +20,16 @@ pip install -r requirements.txt
 ````shell
 python main_telegram.py
 ````
+
+
+Some images from the Telegram Group:
+
+![Telegram Bot Welcome Message](../image/bot_welcome_msg.png "Welcome Message")
+
+![Monitoring message PC1](../image/pc1_monitoring.png "Monitoring PC1")
+
+![Monitoring message PC2](../image/pc2_monitoring.png "Monitoring PC2")
+
+![Monitoring message RASPBERRY PI](../image/raspb_monitoring.png "Monitoring RASPBERRY")
+
+![Alert message PC1 + correction of prediction](../image/pc1_alert_with_correction.png "Alert PC1")
